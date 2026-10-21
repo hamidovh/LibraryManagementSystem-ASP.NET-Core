@@ -1,0 +1,17 @@
+﻿@* ~/Areas/Admin/Views/Shared/_Messages.cshtml: *@
+
+@if (TempData["Success"] is string successMessage)
+{
+    <span class="success-message">@successMessage</span>
+}
+
+@* Silmə zamanı yaranan xəta mesajı (DeleteError): *@
+@if (TempData["DeleteError"] is string deleteError)
+{
+    <span class="warning-message">@deleteError</span>
+}
+
+@if (TempData["Error"] is string errorMessage)
+{
+    <span class="warning-message">@errorMessage</span>
+}

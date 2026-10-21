@@ -1,0 +1,104 @@
+﻿@* ~/Areas/Admin/Views/Borrows/BorrowCreate.cshtml: *@
+
+@model LibraryManagementSystem.Models.ViewModels.BorrowVM
+
+@{
+    Layout = "_AdminLayout";
+    ViewData["Title"] = "Yeni İcarə";
+    var users = ViewBag.Users as List<Microsoft.AspNetCore.Mvc.Rendering.SelectListItem>;
+    var books = ViewBag.Books as List<Microsoft.AspNetCore.Mvc.Rendering.SelectListItem>;
+    string today = DateTime.Today.ToString("yyyy-MM-dd");
+}
+
+@section Styles {
+    <link rel="stylesheet" href="~/AdminControllerCSSs/Content.css" asp-append-version="true" />
+    <link rel="stylesheet" href="~/AdminControllerCSSs/Filter.css" asp-append-version="true" />
+    <link rel="stylesheet" href="~/AdminControllerCSSs/Transactions.css" asp-append-version="true" />
+}
+
+<!-- CONTENT-CONTAINER START -->
+<div class="content-container">
+    <!-- CONTENT-HEADER START -->
+    <div class="content-header">
+        <div class="content-title-area">
+            <div class="content-icon">
+                <i class="fa-solid fa-book-open-reader"></i>
+            </div>
+
+            <div>
+                <span class="content-label">İcarələr</span>
+                <h1 class="content-title">Yeni İcarə</h1>
+            </div>
+        </div>
+
+        <!-- BTN-BACK START -->
+        <a asp-area="Admin" asp-controller="Borrows" asp-action="BorrowIndex" class="btn-back">
+            <i class="fa-solid fa-arrow-left"></i>
+            <span>Geri</span>
+        </a>
+        <!-- BTN-BACK END -->
+    </div>
+    <!-- CONTENT-HEADER END -->
+
+    <!-- TRANSACTION-FORM START -->
+    <form asp-area="Admin" asp-controller="Borrows" asp-action="BorrowCreate" method="post" class="transaction-form">
+        <!-- Controller-dən gələn xəta mesajı: -->
+        <div asp-validation-summary="ModelOnly" class="validation-message warning-message"></div>
+
+        <!-- FORM-SECTION START -->
+        <div class="form-section">
+            <div class="section-title">
+                <i class="fa-solid fa-book-open-reader"></i>
+                <span>İcarə məlumatları</span>
+            </div>
+
+            <div class="form-group">
+                <label asp-for="UserId" class="form-label">İstifadəçi:</label>
+                <select asp-for="UserId" asp-items="users" class="form-select multiselect" data-single data-searchable data-placeholder="İstifadəçi seçin...">
+                    <option value="0">İstifadəçi seçin...</option>
+                </select>
+                <span class="input-info">Yalnız aktiv istifadəçilər göstərilir.</span>
+                <span asp-validation-for="UserId" class="validation-message"></span>
+            </div>
+
+            <div class="form-group">
+                <label asp-for="BookId" class="form-label">Kitab:</label>
+                <select asp-for="BookId" asp-items="books" class="form-select multiselect" data-single data-searchable data-placeholder="Kitab seçin...">
+                    <option value="0">Kitab seçin...</option>
+                </select>
+                <span class="input-info">Yalnız aktiv və boş nüsxəsi olan kitablar göstərilir.</span>
+                <span asp-validation-for="BookId" class="validation-message"></span>
+            </div>
+
+            <div class="form-group">
+                <label asp-for="BorrowDueDate" class="form-label">Qaytarılma müddəti:</label>
+                <input asp-for="BorrowDueDate" type="date" min="@today" value="@(Model.BorrowDueDate == default ? "" : Model.BorrowDueDate.ToString("yyyy-MM-dd"))" class="form-input" style="color-scheme: dark;" /> @* style="color-scheme: dark;" *@
+                <span class="input-info">Kitab bu günün sonuna qədər qaytarılmalıdır. Gecikmə hər gün üçün cərimə yaradır.</span>
+                <span asp-validation-for="BorrowDueDate" class="validation-message"></span>
+            </div>
+        </div>
+        <!-- FORM-SECTION END -->
+
+        <!-- FORM-ACTIONS START -->
+        <div class="form-actions">
+            <a asp-area="Admin" asp-controller="Borrows" asp-action="BorrowIndex" class="btn-cancel">
+                <i class="fa-solid fa-xmark"></i>
+                <span>Ləğv et</span>
+            </a>
+
+            <button type="submit" class="btn-save">
+                <i class="fa-solid fa-check"></i>
+                <span>Yadda saxla</span>
+            </button>
+        </div>
+        <!-- FORM-ACTIONS END -->
+    </form>
+    <!-- TRANSACTION-FORM END -->
+</div>
+<!-- CONTENT-CONTAINER END -->
+
+@section Scripts
+{
+    <partial name="_ValidationScriptsPartial" />
+    <script src="~/AdminControllerJSs/MultiSelect.js"></script>
+}

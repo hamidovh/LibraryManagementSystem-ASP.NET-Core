@@ -1,0 +1,22 @@
+﻿@* ~/Views/_ViewImports.cshtml: *@
+
+@using LibraryManagementSystem
+@using LibraryManagementSystem.Models
+@addTagHelper *, Microsoft.AspNetCore.Mvc.TagHelpers
+
+@* Bu fayl ~/Views qovluğunun daxilindəki View-larda nələrin, hansı namespace-lərin və Tag Helper-lərin avtomatik olaraq əlçatan olacağını müəyyən edir. *@
+
+@* İlk kod sətri ~/Views qovluğunun daxilindəki View-larda LibraryManagementSystem namespace-ini avtomatik olaraq istifadə etməyə imkan verir. Yəni həmin View-larda ayrıca olaraq @using LibraryManagementSystem yazmağa ehtiyac qalmır. *@
+
+@* İkinci kod sətri ~/Views qovluğunun daxilindəki View-larda LibraryManagementSystem.Models namespace-ini və bu namespace-dəki class-ları (tipləri) avtomatik olaraq əlçatan edir. Yəni həmin View-larda ayrıca olaraq @using LibraryManagementSystem.Models yazmağa ehtiyac qalmır. Bu sətir sayəsində, məsələn, LibraryManagementSystem.Models namespace-ində Book adlı class varsa ~/Views qovluğunun daxilindəki View-larda @model Book yazıb onu istifadə etmək mümkün olur. *@
+
+@* Sonuncu kod sətri ASP.NET Core MVC-nin Tag Helper-lərini View-larda istifadə etməyə imkan verir. Məsələn, asp-area, asp-controller, asp-action, asp-for, asp-validation-for, asp-validation-summary, asp-items, asp-route-id (asp-*) və s. ASP.NET Core MVC-nin Tag Helper atributlarıdır və sonuncu kod sətri vasitəsilə bu Tag Helper-lər ~/Views qovluğunun daxilindəki View-larda əlçatan olur.
+
+Sonuncu kod sətrindəki Microsoft.AspNetCore.Mvc.TagHelpers ASP.NET Core MVC-də Tag Helper-lərin yerləşdiyi assembly-nin adıdır. Bu assembly-də Anchor Tag Helper, Form Tag Helper, Input Tag Helper, Label Tag Helper, Select Tag Helper kimi ASP.NET Core-un müxtəlif Tag Helper-ləri mövcuddur.
+Sonuncu kod sətrindəki * işarəsi ilə Microsoft-un Microsoft.AspNetCore.Mvc.TagHelpers assembly-sindəki mövcud Tag Helper-lər ~/Views qovluğunun daxilindəki View-larda istifadə etmək üçün sistemə əlavə olunurlar. Yəni * işarəsi sözügedən assembly-dəki bütün uyğun Tag Helper-lərin View-larda əlçatan olmasını təmin edir.
+
+Tag Helper ASP.NET Core MVC-də HTML elementlərini server tərəfində ASP.NET Core məlumatları ilə əlaqələndirməyə və HTML yaratma prosesini asanlaşdırmağa imkan verən xüsusiyyətdir. Yəni Tag Helper-lər HTML elementlərinin ASP.NET Core tərəfindən server-side-da emal olunaraq uyğun HTML output-unun formalaşmasını təmin edirlər. Tag Helper-lərin əsas üstünlüyü HTML elementlərini ASP.NET Core MVC-nin server-side imkanları ilə birləşdirməkdir. Tag Helper-lər ASP.NET Core MVC-də HTML elementlərinə asp-* kimi atributlar əlavə edərək onları server tərəfdəki MVC mexanizmləri, routing, model binding və validation ilə əlaqələndirməyə imkan verir.
+
+Assembly-lər .NET-də compile olunmuş kodları və onlarla əlaqəli məlumatları özündə saxlayan paketlənmiş vahidlərdir. Assembly-lər .dll və ya .exe fayl formasında ola bilərlər. *@
+
+@* Beləliklə, _ViewImports.cshtml faylında @using direktivi ilə göstərilən namespace-lər və @addTagHelper direktivi ilə əlavə edilən Tag Helper-lər View-larda avtomatik olaraq əlçatan olur. *@

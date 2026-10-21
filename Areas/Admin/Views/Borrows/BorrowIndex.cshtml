@@ -1,0 +1,323 @@
+﻿@* ~/Areas/Admin/Views/Borrows/BorrowIndex.cshtml: *@
+
+@model IEnumerable<LibraryManagementSystem.Models.ViewModels.BorrowVM>
+
+@{
+    Layout = "_AdminLayout";
+    ViewData["Title"] = "İcarələr";
+    string sortOrder = ViewBag.SortOrder;
+    string status = ViewBag.Status;
+    int currentPage = ViewBag.CurrentPage;
+    int totalPages = ViewBag.TotalPages;
+    int totalBorrows = ViewBag.TotalBorrows;
+}
+
+@section Styles {
+    <link rel="stylesheet" href="~/AdminControllerCSSs/Content.css" asp-append-version="true" />
+    <link rel="stylesheet" href="~/AdminControllerCSSs/Filter.css" asp-append-version="true" />
+    <link rel="stylesheet" href="~/AdminControllerCSSs/Transactions.css" asp-append-version="true" />
+    <link rel="stylesheet" href="~/AdminControllerCSSs/Modal.css" asp-append-version="true" />
+}
+
+<!-- CONTENT-CONTAINER START -->
+<div class="content-container">
+    <!-- CONTENT-HEADER START -->
+    <div class="content-header">
+        <h1 class="content-title">İcarələr</h1>
+
+        <!-- CONTENT-FILTER START -->
+        <div class="content-filter">
+            <form asp-area="Admin" asp-controller="Borrows" asp-action="BorrowIndex" method="get">
+                <select id="sortOrder" name="sortOrder" class="content-filter-select" onchange="this.form.submit()">
+                    <option value="date_desc" selected="@(sortOrder == "date_desc")">Yenidən köhnəyə</option>
+                    <option value="date_asc" selected="@(sortOrder == "date_asc")">Köhnədən yeniyə</option>
+                    <option value="due_asc" selected="@(sortOrder == "due_asc")">Müddəti ən tez bitən</option>
+                    <option value="due_desc" selected="@(sortOrder == "due_desc")">Müddəti ən gec bitən</option>
+                </select>
+
+                <select id="status" name="status" class="content-filter-select" onchange="this.form.submit()">
+                    <option value="" selected="@(status == "")">İcarə vəziyyəti</option>
+                    <option value="active" selected="@(status == "active")">Aktiv</option>
+                    <option value="overdue" selected="@(status == "overdue")">Gecikir</option>
+                    <option value="returned" selected="@(status == "returned")">Qaytarılıb</option>
+                </select>
+
+                @if (status != "")
+                {
+                    <a asp-area="Admin" asp-controller="Borrows" asp-action="BorrowIndex" asp-route-sortOrder="@sortOrder" class="btn-clear-filter" title="Filtri təmizlə">
+                        <i class="fa-solid fa-xmark"></i>
+                        <span>Təmizlə</span>
+                    </a>
+                }
+            </form>
+        </div>
+        <!-- CONTENT-FILTER END -->
+
+        <!-- BTN-CREATE START -->
+        <a class="btn-create" asp-area="Admin" asp-controller="Borrows" asp-action="BorrowCreate">
+            <i class="fa-solid fa-plus"></i>
+            <span>Yeni İcarə</span>
+        </a>
+        <!-- BTN-CREATE END -->
+    </div>
+    <!-- CONTENT-HEADER END -->
+
+    <!-- Ümumi icarə sayı -->
+    <div class="content-total">
+        <i class="fa-solid fa-book-open-reader"></i>
+        Ümumi icarə sayı: @totalBorrows
+    </div>
+
+    <!-- Uğur və xəta mesajları (Success, DeleteError, Error): -->
+    <partial name="_Messages" />
+
+    <!-- CONTENT-LIST START -->
+    <div class="content-list">
+        @if (Model != null && Model.Any())
+        {
+            foreach (var borrow in Model)
+            {
+                string statusClass = borrow.BorrowStatus switch
+                {
+                    "Aktiv" => "active",
+                    "Gecikir" => "overdue",
+                    _ => "deactive"
+                };
+                <!-- CONTENT-CARD START -->
+                <div class="content-card">
+                    <!-- CONTENT-INFO START -->
+                    <div class="content-info">
+                        <!-- CONTENT-IMAGE START -->
+                        <div class="content-image">
+                            <i class="fa-solid fa-book-open-reader"></i>
+                        </div>
+                        <!-- CONTENT-IMAGE END -->
+
+                        <!-- CONTENT-NAME-AREA START -->
+                        <div class="content-name-area">
+                            <span class="content-label">İcarə</span>
+
+                            <h2 class="content-name">@borrow.BookName</h2>
+
+                            <span class="content-isbn">
+                                İstifadəçi: @borrow.UserFullName (@borrow.UserUsername)
+                            </span>
+
+                            <span class="content-user-count">
+                                <i class="fa-solid fa-calendar-day"></i>
+                                Müddət: @borrow.BorrowDueDate.ToString("dd.MM.yyyy")
+                            </span>
+                        </div>
+                        <!-- CONTENT-NAME-AREA END -->
+                    </div>
+                    <!-- CONTENT-INFO END -->
+
+                    <!-- CONTENT-ACTIONS START -->
+                    <div class="content-actions">
+                        <!-- STATUS START -->
+                        <span class="status-is-active @statusClass">@borrow.BorrowStatus</span>
+                        <!-- STATUS END -->
+
+                        <!-- BTN-DETAILS (popup-ı açan button) START -->
+                        <button type="button" class="btn-details" title="Ətraflı məlumat"
+                                data-borrow-id="@borrow.BorrowId"
+                                data-borrow-user-full-name="@borrow.UserFullName"
+                                data-borrow-user-username="@borrow.UserUsername"
+                                data-borrow-book-name="@borrow.BookName"
+                                data-borrow-book-isbn="@borrow.BookIsbn"
+                                data-borrow-date="@borrow.BorrowDate.ToString("dd.MM.yyyy HH:mm")"
+                                data-borrow-due-date="@borrow.BorrowDueDate.ToString("dd.MM.yyyy")"
+                                data-borrow-return-date="@(borrow.BorrowReturnDate.HasValue ? borrow.BorrowReturnDate.Value.ToString("dd.MM.yyyy HH:mm") : "-")"
+                                data-borrow-status="@borrow.BorrowStatus"
+                                data-borrow-fine="@(borrow.FineAmount.HasValue ? borrow.FineAmount.Value.ToString("0.00") + " AZN" : "-")">
+
+                            <i class="fa-solid fa-eye"></i>
+
+                        </button>
+                        <!-- BTN-DETAILS (popup-ı açan button) END -->
+
+                        @if (!borrow.BorrowReturnDate.HasValue)
+                        {
+                            <!-- BTN-RETURN START -->
+                            <a asp-area="Admin" asp-controller="Borrows" asp-action="BorrowReturn" asp-route-id="@borrow.BorrowId" class="btn-edit" title="Kitabı qaytar">
+                                <i class="fa-solid fa-rotate-left"></i>
+                                <span>Qaytar</span>
+                            </a>
+                            <!-- BTN-RETURN END -->
+
+                            <!-- BTN-EDIT START -->
+                            <a asp-area="Admin" asp-controller="Borrows" asp-action="BorrowEdit" asp-route-id="@borrow.BorrowId" class="btn-edit" title="Müddəti dəyiş">
+                                <i class="fa-solid fa-pen"></i>
+                                <span>Redaktə Et</span>
+                            </a>
+                            <!-- BTN-EDIT END -->
+                        }
+
+                        <!-- BTN-DELETE START -->
+                        <a asp-area="Admin" asp-controller="Borrows" asp-action="BorrowDelete" asp-route-id="@borrow.BorrowId" class="btn-delete" title="Sil">
+                            <i class="fa-solid fa-trash"></i>
+                            <span>Sil</span>
+                        </a>
+                        <!-- BTN-DELETE END -->
+                    </div>
+                    <!-- CONTENT-ACTIONS END -->
+                </div>
+                <!-- CONTENT-CARD END -->
+            }
+        }
+        else
+        {
+            <div class="empty-message">
+                <i class="fa-solid fa-book-open-reader"></i>
+                <span>Heç bir icarə tapılmadı!</span>
+            </div>
+        }
+    </div>
+    <!-- CONTENT-LIST END -->
+
+    <!-- PAGINATION START -->
+    <partial name="_Pagination" model="@(new PaginationVM
+    {
+        CurrentPage = currentPage,
+        TotalPages = totalPages,
+        PageUrl = p => Url.Action("BorrowIndex", "Borrows", new { area = "Admin", page = p, sortOrder, status })!
+    })" />
+    <!-- PAGINATION END -->
+</div>
+<!-- CONTENT-CONTAINER END -->
+
+<!-- CONTENT-MODAL START -->
+<div class="content-modal" id="borrowModal">
+    <div class="modal-container" id="modalContainer"></div>
+
+    <!-- CONTENT-POPUP START -->
+    <div class="content-popup">
+        <!-- POPUP-HEADER START -->
+        <div class="popup-header">
+            <div class="popup-title-area">
+                <div class="popup-icon">
+                    <i class="fa-solid fa-book-open-reader"></i>
+                </div>
+
+                <div>
+                    <span class="popup-label">İcarə məlumatları</span>
+                    <h2 id="popupBorrowTitle">İcarə</h2>
+                </div>
+            </div>
+
+            <button type="button" class="popup-close" id="popupClose" title="Bağla">
+                <i class="fa-solid fa-xmark"></i>
+            </button>
+        </div>
+        <!-- POPUP-HEADER END -->
+
+        <!-- POPUP-BODY START (icarələrin şəkli olmadığı üçün tək sütun) -->
+        <div class="popup-body" style="grid-template-columns: 1fr;">
+            <!-- POPUP-DETAILS START -->
+            <div class="popup-details">
+                <div class="detail-item">
+                    <span class="detail-label">
+                        <i class="fa-solid fa-hashtag"></i>
+                        İcarə ID
+                    </span>
+
+                    <span class="detail-value" id="popupBorrowId">-</span>
+                </div>
+
+                <div class="detail-item">
+                    <span class="detail-label">
+                        <i class="fa-solid fa-user"></i>
+                        İstifadəçi
+                    </span>
+
+                    <span class="detail-value" id="popupBorrowUserFullName">-</span>
+                </div>
+
+                <div class="detail-item">
+                    <span class="detail-label">
+                        <i class="fa-solid fa-at"></i>
+                        İstifadəçi adı
+                    </span>
+
+                    <span class="detail-value" id="popupBorrowUserUsername">-</span>
+                </div>
+
+                <div class="detail-item">
+                    <span class="detail-label">
+                        <i class="fa-solid fa-book"></i>
+                        Kitab
+                    </span>
+
+                    <span class="detail-value" id="popupBorrowBookName">-</span>
+                </div>
+
+                <div class="detail-item">
+                    <span class="detail-label">
+                        <i class="fa-solid fa-barcode"></i>
+                        ISBN
+                    </span>
+
+                    <span class="detail-value" id="popupBorrowBookIsbn">-</span>
+                </div>
+
+                <div class="detail-item">
+                    <span class="detail-label">
+                        <i class="fa-solid fa-calendar-plus"></i>
+                        İcarə tarixi
+                    </span>
+
+                    <span class="detail-value" id="popupBorrowDate">-</span>
+                </div>
+
+                <div class="detail-item">
+                    <span class="detail-label">
+                        <i class="fa-solid fa-calendar-day"></i>
+                        Qaytarılma müddəti
+                    </span>
+
+                    <span class="detail-value" id="popupBorrowDueDate">-</span>
+                </div>
+
+                <div class="detail-item">
+                    <span class="detail-label">
+                        <i class="fa-solid fa-calendar-check"></i>
+                        Qaytarılma tarixi
+                    </span>
+
+                    <span class="detail-value" id="popupBorrowReturnDate">-</span>
+                </div>
+
+                <div class="detail-item">
+                    <span class="detail-label">
+                        <i class="fa-solid fa-circle-check"></i>
+                        Status
+                    </span>
+
+                    <span class="detail-value">
+                        <span id="popupBorrowStatus" class="popup-is-active">
+                            -
+                        </span>
+                    </span>
+                </div>
+
+                <div class="detail-item">
+                    <span class="detail-label">
+                        <i class="fa-solid fa-money-bill"></i>
+                        Cərimə
+                    </span>
+
+                    <span class="detail-value" id="popupBorrowFine">-</span>
+                </div>
+            </div>
+            <!-- POPUP-DETAILS END -->
+        </div>
+        <!-- POPUP-BODY END -->
+    </div>
+    <!-- CONTENT-POPUP END -->
+</div>
+<!-- CONTENT-MODAL END -->
+
+@section Scripts
+{
+    <script src="~/AdminControllerJSs/BorrowIndex.js"></script>
+}

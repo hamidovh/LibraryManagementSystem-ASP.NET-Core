@@ -1,0 +1,84 @@
+﻿@* ~/Areas/Admin/Views/Shared/_Pagination.cshtml: *@
+
+@model LibraryManagementSystem.Models.ViewModels.PaginationVM
+
+@if (Model.TotalPages > 1)
+{
+    int start = Math.Max(1, Model.CurrentPage - 2);
+    int end = Math.Min(Model.TotalPages, Model.CurrentPage + 2);
+
+    <div class="pagination-container">
+        @* Əvvəlki səhifə düyməsi: *@
+        @if (Model.CurrentPage > 1)
+        {
+            <a class="pagination-btn" href="@Model.PageUrl(Model.CurrentPage - 1)" title="Əvvəlki səhifə">
+                <i class="fa-solid fa-chevron-left"></i>
+            </a>
+        }
+
+        @if (start > 1)
+        {
+            <a class="pagination-btn" href="@Model.PageUrl(1)">1</a>
+            if (start > 2)
+            {
+                <span class="pagination-dots">...</span>
+            }
+        }
+
+        @* Səhifə nömrələri *@
+        @for (int i = start; i <= end; i++)
+        {
+            <a class="pagination-btn @(i == Model.CurrentPage ? "active" : "")" href="@Model.PageUrl(i)">@i</a>
+        }
+
+        @if (end < Model.TotalPages)
+        {
+            if (end < Model.TotalPages - 1)
+            {
+                <span class="pagination-dots">...</span>
+            }
+            <a class="pagination-btn" href="@Model.PageUrl(Model.TotalPages)">@Model.TotalPages</a>
+        }
+
+        @* Növbəti səhifə düyməsi: *@
+        @if (Model.CurrentPage < Model.TotalPages)
+        {
+            <a class="pagination-btn" href="@Model.PageUrl(Model.CurrentPage + 1)" title="Növbəti səhifə">
+                <i class="fa-solid fa-chevron-right"></i>
+            </a>
+        }
+    </div>
+}
+
+@*
+<!-- BooksIndex.cshtml-dəki əvvəlki pagination: -->
+    <!-- PAGINATION START -->
+    @if (ViewBag.TotalPages > 1)
+    {
+        <div class="pagination-container">
+            <!-- Əvvəlki səhifə buttonu: -->
+            @if (ViewBag.CurrentPage > 1)
+            {
+                <a class="pagination-btn" asp-area="Admin" asp-controller="Books" asp-action="BookIndex" asp-route-page="@(ViewBag.CurrentPage - 1)" asp-route-sortorder="@ViewBag.SortOrder" title="Əvvəlki səhifə">
+                    <i class="fa-solid fa-chevron-left"></i>
+                </a>
+            }
+
+            <!-- Səhifə nömrələri: -->
+            @for (int i = 1; i <= ViewBag.TotalPages; i++)
+            {
+                <a class="pagination-btn @(i == ViewBag.CurrentPage ? "active" : "")" asp-area="Admin" asp-controller="Books" asp-action="BookIndex" asp-route-page="@i" asp-route-sortOrder="@ViewBag.SortOrder">@i</a>
+            }
+
+            <!-- Növbəti səhifə düyməsi: -->
+            @if (ViewBag.CurrentPage < ViewBag.TotalPages)
+            {
+                <a class="pagination-btn" asp-area="Admin" asp-controller="Books" asp-action="BookIndex" asp-route-page="@(ViewBag.CurrentPage + 1)" asp-route-sortOrder="@ViewBag.SortOrder" title="Növbəti səhifə">
+                    <i class="fa-solid fa-chevron-right"></i>
+                </a>
+            }
+        </div>
+        <!-- asp-route-sortOrder="@ViewBag.SortOrder" sayəsində, məsələn, kateqoriyalar Z-dən A-ya sıralanıbsa, ikinci səhifəyə keçəndə də həmin sıralama qorunur. -->
+    }    
+    <!-- PAGINATION END -->
+*@

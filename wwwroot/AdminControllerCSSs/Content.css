@@ -1,0 +1,302 @@
+﻿/* ~/wwwroot/AdminControllerCSSs/Content.css: */
+/* Bu Content.css faylının istifadə olunduğu səhifələr: CategoryIndex.cshtml, CategoryCreate.cshtml, CategoryEdit.cshtml, CategoryDelete.cshtml, BookIndex.cshtml, BookCreate.cshtml, BookEdit.cshtml, BookDelete.cshtml, AuthorIndex.cshtml, AuthorCreate.cshtml, AuthorEdit.cshtml, AuthorDelete.cshtml, RoleIndex.cshtml, RoleCreate.cshtml, RoleEdit.cshtml, RoleDelete.cshtml, UserIndex.cshtml, UserCreate.cshtml, UserCreate.cshtml, UserEdit.cshtml, UserDelete.cshtml, BorrowIndex.cshtml, BorrowCreate.cshtml, BorrowEdit.cshtml, BorrowReturn.cshtml, BorrowDelete.cshtml. */
+
+/* CONTENT-CONTAINER START */
+.content-container {
+    width: 100%;
+    padding: 20px 0;
+}
+
+/* CONTENT-HEADER START */
+.content-header {
+    width: 100%;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    flex-wrap: wrap;
+    gap: 15px;
+    margin-bottom: 20px;
+}
+
+.content-title-area {
+    display: flex;
+    align-items: center;
+    gap: 12px;
+}
+
+.content-icon {
+    width: 45px;
+    min-width: 45px;
+    height: 45px;
+    background-color: var(--bcgclr);
+    color: var(--plclr);
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    border: 1px solid var(--borderclr);
+    border-radius: 6px;
+    font-size: 18px;
+}
+
+/* .content-label aşağıdadır (CONTENT-NAME-AREA-dadır) */
+
+.content-title {
+    color: var(--txtclr);
+    font-size: 25px;
+    font-weight: 500;
+    line-height: 1.5;
+}
+/* CONTENT-HEADER END */
+
+/* CONTENT-TOTAL START */
+.content-total { /* BorrowIndex.cshtml səhifəsindədir */
+    color: var(--copyrightsclr);
+    margin-bottom: 15px;
+    font-size: 12px;
+}
+/* CONTENT-TOTAL END */
+
+/* CONTENT-LIST START */
+.content-list {
+    width: 100%;
+    display: flex;
+    flex-direction: column;
+    gap: 10px;
+}
+
+/* CONTENT-CARD START */
+.content-card {
+    width: 100%;
+    min-height: 75px;
+    background-color: var(--hoverclr);
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    padding: 12px 15px;
+    border: 1px solid var(--borderclr);
+    border-radius: 8px;
+    transition: 300ms ease;
+}
+
+.content-card:hover {
+    background-color: var(--cardhoverclr);
+    border-color: var(--borderhoverclr);
+    transform: translateY(-1px);
+}
+
+/* CONTENT-INFO START */
+.content-info {
+    display: flex;
+    align-items: center;
+    gap: 15px;
+}
+
+/* CONTENT-IMAGE START */
+.content-image {
+    width: 45px; /* BookIndex-də fərqlidir. */
+    min-width: 45px; /* BookIndex-də fərqlidir. */
+    height: 45px; /* BookIndex-də fərqlidir. */
+    background-color: var(--bcgclr);
+    color: var(--plclr);
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    border-radius: 6px;
+    font-size: 18px;
+}
+
+.content-image img {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+}
+
+.content-image i {
+    font-size: 25px;
+}
+/* CONTENT-IMAGE END */
+
+/* CONTENT-NAME-AREA START */
+.content-name-area {
+    display: flex;
+    flex-direction: column;
+    flex: 1;
+    gap: 1px;
+}
+
+.content-label {
+    color: var(--labelclr);
+    display: block;
+    text-transform: uppercase;
+    font-size: 10px;
+    font-weight: 600;
+    letter-spacing: 1px;
+}
+
+.content-name {
+    color: var(--txtclr);
+    font-size: 15px;
+    font-weight: 500;
+    line-height: 1.5;
+}
+
+/* CONTENT-ISBN START */
+.content-isbn { /* BookIndex.cshtml */
+    color: #bdbdc550; /* var(--plclr)50% */
+    font-size: 12px;
+}
+
+/* CONTENT-USER-COUNT START */
+.content-user-count { /* RoleIndex.cshtml */
+    color: var(--plclr);
+    display: flex;
+    align-items: center;
+    gap: 6px;
+    font-size: 12px;
+}
+
+.content-user-count i {
+    font-size: 11px;
+}
+/* CONTENT-USER-COUNT END */
+/* CONTENT-ISBN END */
+/* CONTENT-NAME-AREA END */
+/* CONTENT-INFO END */
+
+/* CONTENT-ACTIONS START */
+.content-actions {
+    display: flex;
+    justify-content: flex-end;
+    align-items: center;
+    gap: 8px;
+    margin-left: auto;
+}
+
+.btn-details,
+.btn-edit,
+.btn-delete {
+    min-height: 40px;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    gap: 8px;
+    padding: 0 12px;
+    border-radius: 5px;
+    text-decoration: none;
+    font-size: 14px;
+    font-weight: 500;
+    transition: 300ms ease;
+    cursor: pointer;
+}
+
+.btn-details {
+    min-width: 40px;
+    background-color: var(--bcgclr);
+    color: var(--plclr);
+    border: 1px solid var(--borderclr);
+}
+
+.btn-details:hover {
+    background-color: var(--primaryclr);
+    color: var(--txtclr);
+    transform: translateY(-1px);
+}
+
+.btn-edit {
+    background-color: var(--bcgclr);
+    color: var(--btneditclr);
+    border: 1px solid var(--borderclr);
+}
+
+.btn-edit:hover {
+    background-color: var(--primaryclr);
+    color: var(--txtclr);
+    transform: translateY(-1px);
+}
+
+.btn-delete {
+    background-color: #91323225;
+    color: var(--btndeleteclr);
+    border: 1px solid var(--borderclr);
+}
+
+.btn-delete:hover {
+    background-color: #a537373f;
+    color: var(--btndeletehoverclr);
+    transform: translateY(-1px);
+}
+/* CONTENT-ACTIONS END */
+/* CONTENT-CARD END */
+
+/* EMPTY-MESSAGE START */
+.empty-message {
+    width: 100%;
+    background-color: var(--hoverclr);
+    color: var(--copyrightsclr);
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    gap: 10px;
+    padding: 40px 15px;
+    border: 1px dashed var(--borderhoverclr);
+    border-radius: 8px;
+    font-size: 13px;
+}
+
+.empty-message i {
+    color: var(--popiconclr);
+    font-size: 30px;
+}
+/* EMPTY-MESSAGE END */
+/* CONTENT-LIST END */
+
+/* PAGINATION START */
+.pagination-container {
+    width: 100%;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    flex-wrap: wrap;
+    gap: 8px;
+    margin-top: 25px;
+}
+
+.pagination-btn {
+    min-width: 40px;
+    height: 40px;
+    background-color: var(--primaryclr);
+    color: var(--plclr);
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    padding: 0 12px;
+    border: 1px solid var(--borderclr);
+    border-radius: 5px;
+    text-decoration: none;
+    font-size: 14px;
+    transition: 300ms ease;
+}
+
+.pagination-btn:hover {
+    background-color: var(--hoverclr);
+    color: var(--txtclr);
+    border-color: var(--borderhoverclr);
+}
+
+.pagination-btn.active {
+    background-color: var(--hoverclr);
+    color: var(--txtclr);
+    border-color: var(--borderhoverclr);
+    font-weight: 600;
+}
+
+.pagination-dots {
+    color: var(--copyrightsclr);
+    display: flex;
+    align-items: center;
+    padding: 0 4px;
+    font-size: 14px;
+}
+/* PAGINATION END */
+/* CONTENT-CONTAINER END */

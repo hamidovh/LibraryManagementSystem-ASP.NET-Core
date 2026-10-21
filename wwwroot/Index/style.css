@@ -1,0 +1,240 @@
+/* ~/wwwroot/Index/style.css */
+
+/* RESET CSS START */
+@import url("https://fonts.googleapis.com/css2?family=Poppins:ital,wght@0,100;0,200;0,300;0,400;0,500;0,600;0,700;0,800;0,900;1,100;1,200;1,300;1,400;1,500;1,600;1,700;1,800;1,900&display=swap");
+
+:root {
+    --bcgclr: #30303a;
+    --txtclr: #fff;
+    --primaryclr: #45454e;
+    --hoverclr: #252536;
+    --cardhoverclr: #29293a;
+    --plclr: #bdbdc5;
+    --borderclr: rgba(255, 255, 255, 0.08);
+    --borderhoverclr: rgba(255, 255, 255, 0.16);
+    --sliderclr: rgba(0, 0, 0, 0.4);
+    --sliderhoverclr: rgba(0, 0, 0, 0.8);
+    --copyrightsclr: #888894;
+    --labelclr: #7f7f8b;
+    --popuplabelclr: #858591;
+    --popupcloseclr: #8f8f9a;
+    --popiconclr: #777783;
+    --popdetailvalue: #e0e0e5;
+    --popisactive: #8fc49d;
+    --popisdeactive: #aaaab4;
+    --btneditclr: #c6c6d0;
+    --btndeleteclr: #d99797;
+    --btndeletehoverclr: #efb0b0;
+    --inputfocusclr: #343440;
+}
+
+* {
+    font-family: "Poppins", sans-serif;
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+}
+
+body {
+    width: 100%;
+    height: 100%;
+    background-color: var(--bcgclr);
+}
+
+li {
+    list-style-type: none;
+}
+
+a {
+    color: var(--txtclr);
+    text-decoration: none;
+}
+/* RESET CSS END */
+
+/* HEADER START */
+.header {
+  width: 100%;
+  height: 60px;
+  display: flex;
+  align-items: center;
+  padding: 0 50px;
+}
+
+.logo {
+  color: var(--txtclr);
+  text-decoration: none;
+  font-size: 24px;
+  font-weight: 500;
+}
+
+.box {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  margin-left: auto;
+}
+
+.search-area {
+  display: flex;
+  align-items: center;
+}
+
+.input-group {
+  width: 480px;
+  height: 46px;
+  background-color: var(--primaryclr);
+  display: flex;
+  align-items: center;
+  margin-right: 5px;
+  padding: 3px 8px;
+  border-radius: 3px;
+  border-bottom-left-radius: 8px;
+}
+
+.input-group img {
+  width: 30px;
+}
+
+.input-group input {
+  width: 100%;
+  height: 40px;
+  background-color: transparent;
+  color: var(--txtclr);
+  padding: 10px 20px;
+  border: none;
+  outline: none;
+  font-size: 14px;
+}
+
+.input-group input::placeholder {
+  color: var(--plclr);
+}
+
+.input-controls {
+  height: 46px;
+  display: flex;
+  align-items: center;
+}
+
+.search {
+  background-color: var(--primaryclr);
+  display: flex;
+  align-items: center;
+  padding: 13px 20px;
+  border-radius: 3px;
+  transition: 500ms all;
+  cursor: pointer;
+}
+
+.search img {
+  width: 20px;
+}
+
+.search:hover {
+  background-color: var(--hoverclr);
+}
+
+.login-link {
+    height: 46px;
+    background-color: var(--primaryclr);
+    color: var(--txtclr);
+    display: flex;
+    align-items: center;
+    gap: 8px;
+    padding: 10px 15px;
+    border-radius: 3px;
+    text-decoration: none;
+    font-size: 16px;
+    transition: 500ms all;
+}
+
+.login-link img {
+  width: 20px;
+}
+
+.login-link:hover {
+  background-color: var(--hoverclr);
+}
+/* HEADER END */
+
+/* NAV-MENU START */
+.nav-menu {
+  width: 100%;
+  background-color: var(--hoverclr);
+  display: flex;
+  justify-content: center;
+  padding: 0 50px;
+}
+
+/* MENU START */
+.menu {
+  display: flex;
+  gap: 10px;
+}
+
+.menu-item {
+  margin: 0 5px;
+  position: relative;
+}
+
+.menu-item-link {
+  color: var(--txtclr);
+  display: block;
+  padding: 10px 12px;
+  text-decoration: none;
+  font-size: 14px;
+  transition: 300ms;
+}
+
+.menu-item-link:hover {
+  background-color: var(--bcgclr);
+  border-radius: 5px;
+  text-decoration: underline;
+}
+
+/* DROPDOWN-CONTAINER START */
+.dropdown-container {
+    min-width: 180px;
+    background-color: var(--primaryclr);
+    padding: 1px 0;
+    border-radius: 5px;
+    position: absolute;
+    top: 100%;
+    left: 0;
+    transform: translateY(10px);
+    transition: 250ms all;
+    z-index: 9999;
+    opacity: 0;
+    visibility: hidden;
+}
+
+.menu-item:hover .dropdown-container {
+    opacity: 1;
+    visibility: visible;
+    transform: translateY(0);
+}
+
+.dropdown {
+    width: 100%;
+    max-height: 250px;
+    overflow-y: auto;
+}
+
+.dropdown li a {
+  width: 180px;
+  color: var(--txtclr);
+  display: block;
+  padding: 10px 15px;
+  text-decoration: none;
+  font-size: 13px;
+  transition: 200ms all;
+}
+
+.dropdown li a:hover {
+  background-color: var(--bcgclr);
+  border-radius: 5px;
+  text-decoration: underline;
+}
+/* DROPDOWN-CONTAINER END */
+/* MENU END */
+/* NAV-MENU END */

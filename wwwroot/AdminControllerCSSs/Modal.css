@@ -1,0 +1,226 @@
+﻿/* ~/wwwroot/AdminControllerCSSs/Modal.css: */
+/* Bu Modal.css faylının istifadə olunduğu səhifələr: CategoryIndex.cshtml, CategoryDelete.cshtml, BookIndex.cshtml, BookDelete.cshtml, AuthorIndex.cshtml, AuthorDelete.cshtml, RoleIndex.cshtml, RoleDelete.cshtml, UserIndex.cshtml, UserDelete.cshtml, BorrowIndex.cshtml, BorrowReturn.cshtml, BorrowDelete.cshtml. */
+
+/* CONTENT-MODAL START */
+.content-modal {
+    position: fixed;
+    inset: 0; /*  */
+    z-index: 9999;
+    display: none;
+    justify-content: center;
+    align-items: center;
+    padding: 25px;
+}
+
+.content-modal.active {
+    display: flex;
+}
+
+.modal-container {
+    position: absolute;
+    inset: 0; /*  */
+    background-color: var(--sliderhoverclr);
+    backdrop-filter: blur(3px);
+}
+
+/* CONTENT-POPUP START */
+.content-popup {
+    width: 100%;
+    max-width: 700px;
+    max-height: 600px;
+    /* max-height: min(600px, 90vh); */
+    background-color: var(--hoverclr);
+    color: var(--txtclr);
+    display: flex;
+    flex-direction: column;
+    border: 1px solid var(--borderclr);
+    border-radius: 10px;
+    z-index: 1;
+    overflow: hidden;
+}
+
+/* POPUP-HEADER START */
+.popup-header {
+    min-height: 75px;
+    padding: 15px 20px;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    border-bottom: 1px solid var(--borderclr);
+}
+
+.popup-title-area {
+    display: flex;
+    align-items: center;
+    gap: 12px;
+}
+
+.popup-icon {
+    width: 45px;
+    min-width: 45px;
+    height: 45px;
+    background-color: var(--bcgclr);
+    color: var(--plclr);
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    border: 1px solid var(--borderclr);
+    border-radius: 6px;
+    font-size: 18px;
+}
+
+.popup-label {
+    color: var(--popuplabelclr);
+    display: block;
+    text-transform: uppercase;
+    font-size: 10px;
+    font-weight: 600;
+    letter-spacing: 1px;
+}
+
+.popup-title-area h2 {
+    color: var(--txtclr);
+    font-size: 18px;
+    font-weight: 500;
+}
+
+.popup-close {
+    width: 35px;
+    height: 35px;
+    background-color: transparent;
+    color: var(--popupcloseclr);
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    border: none;
+    border-radius: 5px;
+    font-size: 18px;
+    transition: 300ms ease;
+    cursor: pointer;
+}
+
+.popup-close:hover {
+    background-color: var(--bcgclr);
+    color: var(--txtclr);
+}
+/* POPUP-HEADER END */
+
+/* POPUP-BODY START */
+.popup-body {
+    min-height: 0;
+    max-height: 550px;
+    /* max-height: none; */
+    padding: 25px;
+    overflow-y: auto;
+    display: grid;
+    grid-template-columns: 190px 1fr; /*  */
+    flex: 1;
+    gap: 25px;
+}
+
+.popup-image-area {
+    width: 200px;
+    height: auto;
+    background-color: var(--bcgclr);
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    margin-bottom: auto;
+    border: 1px solid var(--borderclr);
+    border-radius: 8px;
+    overflow: hidden;
+}
+
+.popup-content-image {
+    width: 100%;
+    height: 100%;
+    /* object-fit: cover;*/
+    display: none;
+}
+
+.popup-content-image.visible {
+    display: block;
+}
+
+.popup-image-icon {
+    color: var(--popiconclr);
+    font-size: 40px;
+}
+
+.popup-image-icon.hidden {
+    display: none;
+}
+
+/* POPUP-DETAILS START */
+.popup-details {
+    display: flex;
+    flex-direction: column;
+}
+
+.detail-item {
+    min-height: 55px;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    padding: 10px 0;
+    border-bottom: 1px solid var(--borderclr);
+}
+
+.detail-item:last-child {
+    border-bottom: none;
+}
+
+.detail-label {
+    color: var(--copyrightsclr);
+    display: flex;
+    align-items: center;
+    gap: 8px;
+    margin-right: auto;
+    font-size: 12px;
+    font-weight: 600;
+}
+
+.detail-label i {
+    width: 16px;
+    text-align: center;
+    font-size: 12px;
+}
+
+.detail-value {
+    color: var(--popdetailvalue);
+    margin-left: auto;
+    text-align: right;
+    font-size: 12px;
+}
+
+.popup-is-active, .status-is-active {
+    min-width: 70px;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    padding: 5px 10px;
+    border-radius: 5px;
+    font-size: 12px;
+    font-weight: 500;
+    letter-spacing: 0.5px;
+}
+
+.popup-is-active.active, .status-is-active.active {
+    background-color: #41915a25;
+    color: var(--popisactive);
+}
+
+.popup-is-active.deactive, .status-is-active.deactive {
+    background-color: #9191911f;
+    color: var(--popisdeactive);
+}
+
+.popup-is-active.overdue, .status-is-active.overdue {
+    background-color: rgba(214, 170, 80, 0.12);
+    color: #e0c07a;
+}
+/* POPUP-DETAILS END */
+/* POPUP-BODY END */
+/* CONTENT-POPUP END */
+/* CONTENT-MODAL END */

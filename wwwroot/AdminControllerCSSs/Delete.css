@@ -1,0 +1,78 @@
+﻿/* ~/wwwroot/AdminControllerCSSs/Delete.css: */
+/* Bu Delete.css faylının istifadə olunduğu səhifələr: CategoryDelete.cshtml, BookDelete.cshtml, AuthorDelete.cshtml, RoleDelete.cshtml, UserDelete.cshtml, BorrowReturn.cshtml, BorrowDelete.cshtml. */
+
+/* DELETE-WARNING START */
+.delete-warning {
+    display: flex;
+    align-items: center;
+    gap: 15px;
+    padding-bottom: 20px;
+    margin-bottom: 20px;
+    border-bottom: 1px solid var(--borderclr);
+}
+
+.warning-icon {
+    width: 45px;
+    min-width: 45px;
+    height: 45px;
+    background-color: #91323225;
+    color: var(--btndeleteclr);
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    border: 1px solid var(--borderclr);
+    border-radius: 6px;
+    font-size: 18px;
+}
+
+.warning-content {
+    display: flex;
+    flex-direction: column;
+    gap: 5px;
+}
+
+.warning-content h2 {
+    color: var(--txtclr);
+    font-size: 16px;
+    font-weight: 500;
+}
+
+.warning-content p {
+    color: var(--copyrightsclr);
+    font-size: 12px;
+    line-height: 1.5;
+}
+/* DELETE-WARNING END */
+
+/* CONTENT-DATA START */
+.content-data {
+    display: grid;
+    grid-template-columns: 190px 1fr;
+    gap: 25px;
+}
+
+.content-details {
+    display: flex;
+    flex-direction: column;
+}
+/* CONTENT-DATA END */
+
+/* DELETE-MESSAGE START */
+.delete-message {
+    background-color: var(--bcgclr);
+    color: var(--copyrightsclr);
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    margin-top: 20px;
+    padding: 12px;
+    border: 1px solid var(--borderclr);
+    border-radius: 5px;
+    font-size: 12px;
+}
+
+.delete-message i {
+    color: var(--copyrightsclr);
+    font-size: 12px;
+}
+/* DELETE-MESSAGE END */

@@ -1,0 +1,116 @@
+﻿@* ~Areas/Admin/Views/Shared/_AdminLayout.cshtml: *@
+
+<!DOCTYPE html>
+<html lang="en"> @* <html lang="az"> *@
+<head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+
+    <link rel="shortcut icon" href="~/Index/img/lmsfavicon.png" type="image/png" />    
+    <link rel="stylesheet" href="~/AdminControllerCSSs/_AdminLayout.css" asp-append-version="true" />
+    <link rel="stylesheet" href="~/Index/Footer.css" asp-append-version="true" />
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/7.3.1/css/all.css" integrity="sha512-x9WwyMYBnlXMNQ6kQ/Lyzu1NqIhLQKL5Oq6xByfXuRj7s9CskyCbLv/1IjqzJmXwFXWr0ov6jBV7Qbc0hh9nHg==" crossorigin="anonymous" referrerpolicy="no-referrer" />
+    @await RenderSectionAsync("Styles", required: false)
+
+    <title>@ViewData["Title"] - Kitabxana İdarəetmə Sistemi</title>
+</head>
+<body>
+    <header class="header">
+        <a asp-area="Admin" asp-controller="Main" asp-action="MainAdminIndex" title="Kitabxana" class="logo">Kitabxana İdarəetmə Sistemi</a>
+
+        <section class="box">
+            <div class="search-area">
+                <div class="input-group">
+                    <img src="~/Index/img/book-icon.png" alt="Book Icon" />
+                    <input type="text" placeholder="Axtar..." class="searchInput" />
+                </div>
+
+                <div class="input-controls">
+                    <div class="search search-btn">
+                        <img src="~/Index/img/search_icon.png" alt="Search Icon" />
+                    </div>
+                </div>
+            </div>
+
+            <a href="#" class="login-link">
+                <span>Hesab</span>
+                <img src="~/Index/img/person-circle-icon.webp" alt="Person Circle Icon" />
+            </a>
+        </section>
+    </header>
+
+    <section class="inner-wrapper">
+        <aside class="sidebar-left">
+            <div class="sidebar-head">
+                <div class="sidebar-title">
+                    <h4>Menyu</h4>
+                </div>
+                <div class="sidebar-toggle">
+                    <i id="showhide" class="fa fa-bars"></i>
+                </div>
+            </div>
+
+            <ul class="sidebar-menu">
+                <li class="sidebar-menu-item">
+                    <a asp-area="Admin" asp-controller="Books" asp-action="BookIndex" title="Kitablar" class="sidebar-menu-item-link">
+                        <i class="fa-solid fa-book sidebar-menu-icon"></i>
+                        <span class="sidebar-menu-text">Kitablar</span>
+                    </a>
+                </li>
+
+                <li class="sidebar-menu-item">
+                    <a asp-area="Admin" asp-controller="Authors" asp-action="AuthorIndex" title="Müəlliflər" class="sidebar-menu-item-link">
+                        <i class="fa-solid fa-user-pen sidebar-menu-icon"></i>
+                        <span class="sidebar-menu-text">Müəlliflər</span>
+                    </a>
+                </li>
+
+                <li class="sidebar-menu-item">
+                    <a asp-area="Admin" asp-controller="Categories" asp-action="CategoryIndex" title="Kateqoriyalar" class="sidebar-menu-item-link">
+                        <i class="fa-solid fa-layer-group sidebar-menu-icon"></i>
+                        <span class="sidebar-menu-text">Kateqoriyalar</span>
+                    </a>
+                </li>
+
+                <li class="sidebar-menu-item">
+                    <a asp-area="Admin" asp-controller="Users" asp-action="UserIndex" title="İstifadəçilər" class="sidebar-menu-item-link">
+                        <i class="fa-solid fa-users sidebar-menu-icon"></i>
+                        <span class="sidebar-menu-text">İstifadəçilər</span>
+                    </a>
+                </li>
+
+                <li class="sidebar-menu-item">
+                    <a asp-area="Admin" asp-controller="Roles" asp-action="RoleIndex" title="Rollar" class="sidebar-menu-item-link">
+                        <i class="fa-solid fa-user-shield sidebar-menu-icon"></i>
+                        <span class="sidebar-menu-text">Rollar</span>
+                    </a>
+                </li>
+
+                <li class="sidebar-menu-item">
+                    <a asp-area="Admin" asp-controller="Borrows" asp-action="BorrowIndex" title="İcarələr" class="sidebar-menu-item-link">
+                        <i class="fa-solid fa-book-open-reader sidebar-menu-icon"></i>
+                        <span class="sidebar-menu-text">İcarələr</span>
+                    </a>
+                </li>
+
+                <li class="sidebar-menu-item">
+                    <a asp-area="Admin" asp-controller="Fines" asp-action="FineIndex" title="Cərimələr" class="sidebar-menu-item-link">
+                        <i class="fa-solid fa-money-bill-wave sidebar-menu-icon"></i>
+                        <span class="sidebar-menu-text">Cərimələr</span>
+                    </a>
+                </li>
+            </ul>
+        </aside>
+
+        <main class="main">
+            @RenderBody() @* Bu kod sətiri bu Layout-dan istifadə edən View-ların əsas HTML məzmununu bu hissəyə yerləşdirir. *@
+        </main>
+    </section>
+
+    <partial name="_Footer" />
+
+    <script src="~/AdminControllerJSs/_AdminLayoutJS.js" asp-append-version="true"></script>
+    <script src="~/lib/jquery/dist/jquery.min.js"></script>
+    @await RenderSectionAsync("Scripts", required: false) @* Bu kod sətiri bu Layout-dan istifadə edən View-larda yazılmış @section Scripts { } daxilindəki script kodlarını burada render edir (göstərir). required: false @section Scripts { } sahəsinin View-da olmasının məcburi olmadığını bildirir. *@
+</body>
+</html>

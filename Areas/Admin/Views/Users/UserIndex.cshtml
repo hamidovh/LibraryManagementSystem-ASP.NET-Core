@@ -1,0 +1,330 @@
+﻿ @* ~/Areas/Admin/Views/Users/UserIndex.cshtml: *@
+
+@model IEnumerable<LibraryManagementSystem.Models.ViewModels.UserVM>
+
+@{
+    Layout = "_AdminLayout";
+    ViewData["Title"] = "İstifadəçilər";
+    string sortOrder = ViewBag.SortOrder;
+    int currentPage = ViewBag.CurrentPage;
+    int totalPages = ViewBag.TotalPages;
+    int totalUsers = ViewBag.TotalUsers;
+}
+
+@section Styles {
+    <link rel="stylesheet" href="~/AdminControllerCSSs/Content.css" asp-append-version="true" />
+    <link rel="stylesheet" href="~/AdminControllerCSSs/Filter.css" asp-append-version="true" />
+    <link rel="stylesheet" href="~/AdminControllerCSSs/Transactions.css" asp-append-version="true" />
+    <link rel="stylesheet" href="~/AdminControllerCSSs/Modal.css" asp-append-version="true" />
+}
+
+<!-- CONTENT-CONTAINER START -->
+<div class="content-container">
+    <!-- CONTENT-HEADER START -->
+    <div class="content-header">
+        <h1 class="content-title">İstifadəçilər</h1>
+
+        <!-- CONTENT-FILTER START -->
+        <div class="content-filter">
+            <form asp-area="Admin" asp-controller="Users" asp-action="UserIndex" method="get">
+                <select id="sortOrder" name="sortOrder" class="content-filter-select" onchange="this.form.submit()">
+                    <option value="date_desc" selected="@(sortOrder == "date_desc")">Yenidən köhnəyə</option>
+                    <option value="date_asc" selected="@(sortOrder == "date_asc")">Köhnədən yeniyə</option>
+                    <option value="name_asc" selected="@(sortOrder == "name_asc")">A-dan Z-yə</option>
+                    <option value="name_desc" selected="@(sortOrder == "name_desc")">Z-dən A-ya</option>
+                </select>
+            </form>
+        </div>
+        <!-- CONTENT-FILTER END -->
+
+        <!-- BTN-CREATE START -->
+        <a class="btn-create" asp-area="Admin" asp-controller="Users" asp-action="UserCreate">
+            <i class="fa-solid fa-plus"></i>
+            <span>Yeni İstifadəçi</span>
+        </a>
+        <!-- BTN-CREATE END -->
+    </div>
+    <!-- CONTENT-HEADER END -->
+
+    <!-- İstifadəçi sayı -->
+    <div class="content-total">
+        <i class="fa-solid fa-users"></i>
+        Ümumi istifadəçi sayı: @totalUsers
+    </div>
+
+    <!-- Uğur və xəta mesajları (Success, DeleteError, Error): -->
+    <partial name="_Messages" />
+
+    <!-- CONTENT-LIST START -->
+    <div class="content-list">
+        @if (Model != null && Model.Any())
+        {
+            foreach (var user in Model)
+            {
+                <!-- CONTENT-CARD START -->
+                <div class="content-card">
+                    <!-- CONTENT-INFO START -->
+                    <div class="content-info">
+                        <!-- CONTENT-IMAGE START -->
+                        <div class="content-image">
+                            <i class="fa-solid fa-user"></i>
+                        </div>
+                        <!-- CONTENT-IMAGE END -->
+
+                        <!-- CONTENT-NAME-AREA START -->
+                        <div class="content-name-area">
+                            <span class="content-label">İstİfadəçİ</span>
+
+                            <h2 class="content-name">@user.UserFullName</h2>
+
+                            <span class="content-isbn">
+                                İstifadəçi adı: @user.UserUsername
+                            </span>
+
+                            <span class="content-user-count">
+                                <i class="fa-solid fa-user-shield"></i>
+                                @user.RoleName
+                            </span>
+                        </div>
+                        <!-- CONTENT-NAME-AREA END -->
+                    </div>
+                    <!-- CONTENT-INFO END -->
+
+                    <!-- CONTENT-ACTIONS START -->
+                    <div class="content-actions">
+                        <!-- BTN-DETAILS START -->
+                        <button type="button" class="btn-details" title="Ətraflı məlumat"
+                                data-user-id="@user.UserId"
+                                data-user-name="@user.UserName"
+                                data-user-surname="@user.UserSurname"
+                                data-user-date-of-birth="@user.UserDateOfBirth.ToString("dd.MM.yyyy")"
+                                data-user-sex="@user.UserSex"
+                                data-user-personal-no="@user.UserPersonalNo"
+                                data-user-email="@user.UserEmail"
+                                data-user-phone-no="@user.UserPhoneNo"
+                                data-user-address="@user.UserAddress"
+                                data-user-username="@user.UserUsername"
+                                data-user-role-name="@user.RoleName"
+                                data-user-is-active="@user.UserIsActive"
+                                data-user-registration-date="@user.UserRegistrationDate.ToString("dd.MM.yyyy HH:mm")"
+                                data-user-updated-date="@(user.UserUpdatedDate.HasValue ? user.UserUpdatedDate.Value.ToString("dd.MM.yyyy HH:mm") : "-")">
+
+                            <i class="fa-solid fa-eye"></i>
+
+                        </button>
+                        <!-- BTN-DETAILS END -->
+
+                        <!-- BTN-EDIT START -->
+                        <a asp-area="Admin" asp-controller="Users" asp-action="UserEdit" asp-route-id="@user.UserId" class="btn-edit" title="Redaktə et">
+                            <i class="fa-solid fa-pen"></i>
+                            <span>Redaktə Et</span>
+                        </a>
+                        <!-- BTN-EDIT END -->
+
+                        <!-- BTN-DELETE START -->
+                        <a asp-area="Admin" asp-controller="Users" asp-action="UserDelete" asp-route-id="@user.UserId" class="btn-delete" title="Sil">
+                            <i class="fa-solid fa-trash"></i>
+                            <span>Sil</span>
+                        </a>
+                        <!-- BTN-DELETE END -->
+                    </div>
+                    <!-- CONTENT-ACTIONS END -->
+                </div>
+                <!-- CONTENT-CARD END -->
+            }
+        }
+        else
+        {
+            <div class="empty-message">
+                <i class="fa-solid fa-users"></i>
+                <span>Heç bir istifadəçi tapılmadı!</span>
+            </div>
+        }
+    </div>
+    <!-- CONTENT-LIST END -->
+
+    <!-- PAGINATION START -->
+    <partial name="_Pagination" model="@(new PaginationVM
+    {
+        CurrentPage = currentPage,
+        TotalPages = totalPages,
+        PageUrl = p => Url.Action("UserIndex", "Users", new
+        {
+            area = "Admin", page = p, sortOrder
+        })!
+    })" />
+    <!-- PAGINATION END -->
+</div>
+<!-- CONTENT-CONTAINER END -->
+
+<!-- CONTENT-MODAL START -->
+<div class="content-modal" id="userModal">
+    <div class="modal-container" id="modalContainer"></div>
+
+    <!-- CONTENT-POPUP START -->
+    <div class="content-popup">
+        <!-- POPUP-HEADER START -->
+        <div class="popup-header">
+            <div class="popup-title-area">
+                <div class="popup-icon">
+                    <i class="fa-solid fa-user"></i>
+                </div>
+
+                <div>
+                    <span class="popup-label">İstİfadəçİ məlumatları</span>
+                    <h2 id="popupUserTitle">İstifadəçi</h2>
+                </div>
+            </div>
+
+            <button type="button" class="popup-close" id="popupClose" title="Bağla">
+                <i class="fa-solid fa-xmark"></i>
+            </button>
+        </div>
+        <!-- POPUP-HEADER END -->
+
+        <!-- POPUP-BODY START -->
+        <div class="popup-body" style="grid-template-columns: 1fr;">
+            <!-- POPUP-DETAILS START -->
+            <div class="popup-details">
+                <div class="detail-item">
+                    <span class="detail-label">
+                        <i class="fa-solid fa-hashtag"></i>
+                        İstifadəçi ID
+                    </span>
+
+                    <span class="detail-value" id="popupUserId">-</span>
+                </div>
+
+                <div class="detail-item">
+                    <span class="detail-label">
+                        <i class="fa-solid fa-user"></i>
+                        Ad
+                    </span>
+
+                    <span class="detail-value" id="popupUserName">-</span>
+                </div>
+
+                <div class="detail-item">
+                    <span class="detail-label">
+                        <i class="fa-solid fa-user"></i>
+                        Soyad
+                    </span>
+
+                    <span class="detail-value" id="popupUserSurname">-</span>
+                </div>
+
+                <div class="detail-item">
+                    <span class="detail-label">
+                        <i class="fa-solid fa-calendar-day"></i>
+                        Doğum tarixi
+                    </span>
+
+                    <span class="detail-value" id="popupUserDateOfBirth">-</span>
+                </div>
+
+                <div class="detail-item">
+                    <span class="detail-label">
+                        <i class="fa-solid fa-venus-mars"></i>
+                        Cins
+                    </span>
+
+                    <span class="detail-value" id="popupUserSex">-</span>
+                </div>
+
+                <div class="detail-item">
+                    <span class="detail-label">
+                        <i class="fa-solid fa-id-card"></i>
+                        FİN kod
+                    </span>
+
+                    <span class="detail-value" id="popupUserPersonalNo">-</span>
+                </div>
+
+                <div class="detail-item">
+                    <span class="detail-label">
+                        <i class="fa-solid fa-envelope"></i>
+                        E-poçt
+                    </span>
+
+                    <span class="detail-value" id="popupUserEmail">-</span>
+                </div>
+
+                <div class="detail-item">
+                    <span class="detail-label">
+                        <i class="fa-solid fa-phone"></i>
+                        Telefon nömrəsi
+                    </span>
+
+                    <span class="detail-value" id="popupUserPhoneNo">-</span>
+                </div>
+
+                <div class="detail-item">
+                    <span class="detail-label">
+                        <i class="fa-solid fa-location-dot"></i>
+                        Ünvan
+                    </span>
+
+                    <span class="detail-value" id="popupUserAddress">-</span>
+                </div>
+
+                <div class="detail-item">
+                    <span class="detail-label">
+                        <i class="fa-solid fa-at"></i>
+                        İstifadəçi adı
+                    </span>
+
+                    <span class="detail-value" id="popupUserUsername">-</span>
+                </div>
+
+                <div class="detail-item">
+                    <span class="detail-label">
+                        <i class="fa-solid fa-user-shield"></i>
+                        Rol
+                    </span>
+
+                    <span class="detail-value" id="popupUserRoleName">-</span>
+                </div>
+
+                <div class="detail-item">
+                    <span class="detail-label">
+                        <i class="fa-solid fa-circle-check"></i>
+                        Status
+                    </span>
+
+                    <span class="detail-value">
+                        <span id="popupUserIsActive" class="popup-is-active">
+                            -
+                        </span>
+                    </span>
+                </div>
+
+                <div class="detail-item">
+                    <span class="detail-label">
+                        <i class="fa-solid fa-calendar-plus"></i>
+                        Qeydiyyat tarixi
+                    </span>
+
+                    <span class="detail-value" id="popupUserRegistrationDate">-</span>
+                </div>
+
+                <div class="detail-item">
+                    <span class="detail-label">
+                        <i class="fa-solid fa-calendar-check"></i>
+                        Son yenilənmə tarixi
+                    </span>
+
+                    <span class="detail-value" id="popupUserUpdatedDate">-</span>
+                </div>
+            </div>
+            <!-- POPUP-DETAILS END -->
+        </div>
+        <!-- POPUP-BODY END -->
+    </div>
+    <!-- CONTENT-POPUP END -->
+</div>
+<!-- CONTENT-MODAL END -->
+
+@section Scripts
+{
+    <script src="~/AdminControllerJSs/UserIndex.js"></script>
+}

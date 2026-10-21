@@ -1,0 +1,130 @@
+﻿@* ~/Areas/Admin/Views/Fines/FinePay.cshtml: *@
+
+@model LibraryManagementSystem.Models.ViewModels.FineVM
+
+@{
+    Layout = "_AdminLayout";
+    ViewData["Title"] = "Cəriməni Ödə";
+}
+
+@section Styles {
+    <link rel="stylesheet" href="~/AdminControllerCSSs/Content.css" asp-append-version="true" />
+    <link rel="stylesheet" href="~/AdminControllerCSSs/Transactions.css" asp-append-version="true" />
+    <link rel="stylesheet" href="~/AdminControllerCSSs/Modal.css" asp-append-version="true" />
+    <link rel="stylesheet" href="~/AdminControllerCSSs/Delete.css" asp-append-version="true" />
+}
+
+<!-- CONTENT-CONTAINER START -->
+<div class="content-container">
+    <!-- CONTENT-HEADER START -->
+    <div class="content-header">
+        <div class="content-title-area">
+            <div class="content-icon">
+                <i class="fa-solid fa-money-bill-wave"></i>
+            </div>
+
+            <div>
+                <span class="content-label">Cərimələr</span>
+                <h1 class="content-title">Cəriməni Ödə</h1>
+            </div>
+        </div>
+
+        <!-- BTN-BACK START -->
+        <a asp-area="Admin" asp-controller="Fines" asp-action="FineIndex" class="btn-back">
+            <i class="fa-solid fa-arrow-left"></i>
+            <span>Geri</span>
+        </a>
+        <!-- BTN-BACK END -->
+    </div>
+    <!-- CONTENT-HEADER END -->
+
+    <!-- TRANSACTION-FORM START -->
+    <form asp-area="Admin" asp-controller="Fines" asp-action="FinePay" asp-route-id="@Model.FineId" method="post" class="transaction-form">
+        <!-- FORM-SECTION START -->
+        <div class="form-section">
+            <!-- DELETE-WARNING START -->
+            <div class="delete-warning">
+                <div class="warning-icon">
+                    <i class="fa-solid fa-hand-holding-dollar"></i>
+                </div>
+
+                <div class="warning-content">
+                    <h2>Cəriməni ödənilmiş kimi qeyd etmək istəyirsiniz?</h2>
+                    <p>Ödəniş tarixi olaraq indiki vaxt qeyd olunacaq. Bu əməliyyatdan sonra cərimə redaktə edilə və silinə bilməyəcək!</p>
+                </div>
+            </div>
+            <!-- DELETE-WARNING END -->
+
+            <!-- CONTENT-DATA START (cərimələrin şəkli olmadığı üçün tək sütun) -->
+            <div class="content-data" style="grid-template-columns: 1fr;">
+                <!-- CONTENT-DETAILS START -->
+                <div class="content-details">
+                    <div class="detail-item">
+                        <span class="detail-label"><i class="fa-solid fa-hashtag"></i> Cərimə ID</span>
+                        <span class="detail-value">@Model.FineId</span>
+                    </div>
+
+                    <div class="detail-item">
+                        <span class="detail-label"><i class="fa-solid fa-user"></i> İstifadəçi</span>
+                        <span class="detail-value">@Model.UserFullName (@Model.UserUsername)</span>
+                    </div>
+
+                    <div class="detail-item">
+                        <span class="detail-label"><i class="fa-solid fa-book"></i> Kitab</span>
+                        <span class="detail-value">@Model.BookName</span>
+                    </div>
+
+                    <div class="detail-item">
+                        <span class="detail-label"><i class="fa-solid fa-barcode"></i> ISBN</span>
+                        <span class="detail-value">@Model.BookIsbn</span>
+                    </div>
+
+                    <div class="detail-item">
+                        <span class="detail-label"><i class="fa-solid fa-circle-exclamation"></i> Cərimənin səbəbi</span>
+                        <span class="detail-value">@Model.FineReason</span>
+                    </div>
+
+                    <div class="detail-item">
+                        <span class="detail-label"><i class="fa-solid fa-calendar-plus"></i> Cərimənin yaranma tarixi</span>
+                        <span class="detail-value">@Model.FineDate.ToString("dd.MM.yyyy HH:mm")</span>
+                    </div>
+
+                    <div class="detail-item">
+                        <span class="detail-label"><i class="fa-solid fa-circle-check"></i> Status</span>
+                        <span class="detail-value">
+                            <span class="status-is-active overdue">@Model.FineStatus</span>
+                        </span>
+                    </div>
+
+                    <div class="detail-item">
+                        <span class="detail-label"><i class="fa-solid fa-money-bill"></i> Ödənilməli məbləğ</span>
+                        <span class="detail-value">@Model.FineAmount.ToString("0.00") AZN</span>
+                    </div>
+                </div>
+                <!-- CONTENT-DETAILS END -->
+            </div>
+            <!-- CONTENT-DATA END -->
+
+            <!-- DELETE-MESSAGE START -->
+            <div class="delete-message">
+                <i class="fa-solid fa-circle-info"></i>
+                <span>Təsdiq etdikdən sonra @Model.FineAmount.ToString("0.00") AZN məbləğində cərimə ödənilmiş kimi qeyd olunacaq!</span>
+            </div>
+            <!-- DELETE-MESSAGE END -->
+        </div>
+        <!-- FORM-SECTION END -->
+
+        <!-- FORM-ACTIONS START -->
+        <div class="form-actions">
+            <a asp-area="Admin" asp-controller="Fines" asp-action="FineIndex" class="btn-cancel">Ləğv et</a>
+
+            <button type="submit" class="btn-save">
+                <i class="fa-solid fa-check"></i>
+                <span>Ödənişi təsdiqlə</span>
+            </button>
+        </div>
+        <!-- FORM-ACTIONS END -->
+    </form>
+    <!-- TRANSACTION-FORM END -->
+</div>
+<!-- CONTENT-CONTAINER END -->

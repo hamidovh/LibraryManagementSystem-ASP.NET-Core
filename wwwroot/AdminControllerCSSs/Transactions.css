@@ -1,0 +1,313 @@
+﻿/* ~/wwwroot/AdminControllerCSSs/Transactions.css: */
+/* Bu Transactions.css faylının istifadə olunduğu səhifələr: CategoryIndex.cshtml, CategoryCreate.cshtml, CategoryEdit.cshtml, CategoryDelete.cshtml, BookIndex.cshtml, BookCreate.cshtml, BookEdit.cshtml, BookDelete.cshtml, AuthorIndex.cshtml, AuthorCreate.cshtml, AuthorEdit.cshtml, AuthorDelete.cshtml, RoleIndex.cshtml, RoleCreate.cshtml, RoleEdit.cshtml, RoleDelete.cshtml, UserIndex.cshtml, UserCreate.cshtml, UserCreate.cshtml, UserEdit.cshtml, UserDelete.cshtml, BorrowIndex.cshtml, BorrowCreate.cshtml, BorrowEdit.cshtml, BorrowReturn.cshtml, BorrowDelete.cshtml. */
+
+/* BTN-CREATE START, BTN-BACK START */
+.btn-create, .btn-back {
+    min-height: 40px;
+    background-color: var(--primaryclr);
+    color: var(--txtclr);
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    gap: 8px;
+    margin-left: auto;
+    padding: 0 12px;
+    border: 1px solid var(--borderclr);
+    border-radius: 5px;
+    outline: none;
+    text-decoration: none;
+    font-size: 14px;
+    font-weight: 500;
+    cursor: pointer;
+    transition: 300ms ease;
+}
+
+.btn-back {
+    background-color: var(--bcgclr);
+    color: var(--plclr);
+}
+
+.btn-create i, .btn-back i {
+    font-size: 13px;
+}
+
+.btn-create:hover {
+    background-color: var(--bcgclr);
+    transform: translateY(-1px);
+}
+
+.btn-back:hover {
+    background-color: var(--primaryclr);
+    color: var(--txtclr);
+    transform: translateY(-1px);
+}
+/* BTN-CREATE END, BTN-BACK END */
+
+/* TRANSACTION-FORM START */
+.transaction-form {
+    width: 100%;
+}
+
+/* FORM-SECTION START */
+.form-section {
+    width: 100%;
+    background-color: var(--hoverclr);
+    border: 1px solid var(--borderclr);
+    border-radius: 8px;
+    padding: 25px;
+}
+
+.section-title {
+    color: var(--txtclr);
+    font-size: 15px;
+    font-weight: 500;
+    padding-bottom: 15px;
+    margin-bottom: 20px;
+    border-bottom: 1px solid var(--borderclr);
+}
+
+.form-row {
+    width: 100%;
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 20px;
+}
+
+.form-group {
+    display: flex;
+    flex-direction: column;
+    margin-bottom: 20px;
+}
+
+.form-group:last-child {
+    margin-bottom: 0;
+}
+
+.form-group-inline {
+    flex-direction: row;
+    align-items: center;
+    gap: 25px;
+}
+
+.form-label {
+    color: var(--plclr);
+    margin-bottom: 8px;
+    font-size: 12px;
+    font-weight: 500;
+}
+
+.form-group-inline .form-label {
+    margin-bottom: 0;
+}
+
+.form-input,
+.form-textarea,
+.form-select {
+    width: 100%;
+    background-color: var(--bcgclr);
+    color: var(--txtclr);
+    border: 1px solid var(--borderclr);
+    border-radius: 5px;
+    outline: none;
+    font-size: 14px;
+    transition: 300ms ease;
+}
+
+.form-input {
+    height: 45px;
+    padding: 0 12px;
+}
+
+.form-textarea {
+    height: 250px;
+    min-height: 150px;
+    padding: 10px 12px;
+    resize: vertical;
+}
+
+.form-input::placeholder,
+.form-textarea::placeholder {
+    color: var(--popiconclr);
+}
+
+.form-input:focus,
+.form-textarea:focus,
+.form-select:focus {
+    background-color: var(--inputfocusclr);
+    border-color: var(--borderhoverclr);
+}
+
+.form-select { /*  */
+    min-height: 40px;
+    height: 40px;
+    padding: 5px;
+}
+
+.form-select option {
+    background-color: var(--bcgclr);
+    color: var(--txtclr);
+    padding: 8px;
+}
+
+.form-select option:checked {
+    background-color: var(--primaryclr);
+} /*  */
+
+.status-checkbox {
+    color: var(--plclr);
+    display: flex;
+    align-items: center;
+    gap: 8px;
+    font-size: 12px;
+    cursor: pointer;
+}
+
+.status-checkbox input {
+    width: 16px;
+    height: 16px;
+    border-radius: 5px;
+    cursor: pointer;
+}
+
+.delete-checkbox {
+    color: var(--btndeleteclr);
+}
+
+.form-file {
+    width: 100%;
+    background-color: var(--bcgclr);
+    color: var(--plclr);
+    padding: 10px;
+    border: 1px solid var(--borderclr);
+    border-radius: 5px;
+    font-size: 12px;
+    cursor: pointer;
+}
+
+.form-file::file-selector-button {
+    background-color: var(--primaryclr);
+    color: var(--txtclr);
+    margin-right: 10px;
+    padding: 8px 12px;
+    border: 1px solid var(--borderclr);
+    border-radius: 5px;
+    font-size: 12px;
+    transition: 300ms ease;
+    cursor: pointer;
+}
+
+.form-file::file-selector-button:hover {
+    background-color: var(--bcgclr);
+}
+
+.file-info,
+.input-info {
+    color: var(--popiconclr);
+    margin-top: 6px;
+    font-size: 10px;
+}
+
+.input-info {
+    margin-top: 5px;
+}
+
+.validation-message {
+    color: var(--btndeleteclr);
+    margin-top: 6px;
+    font-size: 12px;
+}
+
+/* WARNING-MESSAGE START */
+.warning-message {
+    background-color: rgba(214, 170, 80, 0.12);
+    color: #e0c07a;
+    display: block;
+    margin: 0 0 16px 0;
+    padding: 10px 12px;
+    border: 1px solid rgba(214, 170, 80, 0.25);
+    border-radius: 5px;
+    font-size: 12px;
+    line-height: 1.5;
+}
+
+.warning-message ul {
+    margin: 0;
+    padding: 0;
+    list-style: none;
+}
+
+/* ASP.NET xəta yoxdursa boş div-i "validation-summary-valid" class-ı ilə render edir, boş qutu görünməsin deyə gizlədilir: */
+.warning-message.validation-summary-valid {
+    display: none;
+}
+/* WARNING-MESSAGE END */
+
+/* SUCCESS-MESSAGE START */
+.success-message {
+    background-color: rgba(65, 145, 90, 0.12);
+    color: var(--popisactive);
+    display: block;
+    margin: 0 0 16px 0;
+    padding: 10px 12px;
+    border: 1px solid rgba(65, 145, 90, 0.25);
+    border-radius: 5px;
+    font-size: 12px;
+    line-height: 1.5;
+}
+/* SUCCESS-MESSAGE END */
+/* FORM-SECTION END */
+
+/* FORM-ACTIONS START */
+.form-actions {
+    display: flex;
+    justify-content: flex-end;
+    align-items: center;
+    gap: 8px;
+    margin-top: 16px;
+    margin-left: auto;
+}
+
+.btn-cancel,
+.btn-save {
+    min-height: 40px;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    gap: 8px;
+    padding: 0 12px;
+    border-radius: 5px;
+    text-decoration: none;
+    font-size: 14px;
+    font-weight: 500;
+    transition: 300ms ease;
+    cursor: pointer;
+}
+
+.btn-cancel {
+    background-color: var(--bcgclr);
+    color: var(--plclr);
+    border: 1px solid var(--borderclr);
+}
+
+.btn-cancel:hover {
+    background-color: var(--primaryclr);
+    color: var(--txtclr);
+    transform: translateY(-1px);
+}
+
+.btn-save {
+    background-color: var(--primaryclr);
+    color: var(--txtclr);
+    border: 1px solid var(--borderclr);
+}
+
+.btn-save i {
+    font-size: 13px;
+}
+
+.btn-save:hover {
+    background-color: var(--bcgclr);
+    transform: translateY(-1px);
+}
+/* FORM-ACTIONS END */
+/* TRANSACTION-FORM END */

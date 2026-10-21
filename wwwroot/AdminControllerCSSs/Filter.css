@@ -1,0 +1,294 @@
+﻿/* ~/wwwroot/AdminControllerCSSs/Filter.css: */
+/* Bu Filter.css faylının istifadə olunduğu səhifələr: CategoryIndex.cshtml, BookIndex.cshtml, BookCreate.cshtml, BookEdit.cshtml, AuthorIndex.cshtml, RoleIndex.cshtml, UserIndex.cshtml, BorrowIndex.cshtml, BorrowCreate.cshtml. */
+
+/* CONTENT-CONTAINER START */
+/* CONTENT-HEADER START */
+/* CONTENT-FILTER START */
+.content-filter {
+    margin-left: 10px;
+    margin-right: auto;
+    display: flex;
+    justify-content: flex-start;
+}
+
+.content-filter form {
+    display: flex;
+    align-items: center;
+    flex-wrap: wrap;
+    gap: 10px;
+}
+
+.content-filter-select {
+    min-width: 150px;
+    height: 40px;
+    background-color: var(--primaryclr);
+    color: var(--txtclr);
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    padding: 0 12px;
+    border: 1px solid var(--borderclr);
+    border-radius: 5px;
+    outline: none;
+    text-decoration: none;
+    font-size: 14px;
+    font-weight: 500;
+    cursor: pointer;
+    transition: 300ms ease;
+}
+
+.content-filter-select:hover {
+    background-color: var(--bcgclr);
+}
+
+.content-filter-select option {
+    background-color: var(--bcgclr);
+    color: var(--txtclr);
+}
+
+/* Multiselect filtrlər: sıralama select-i ilə eyni ölçü və rəng (bu classlar MultiSelect.js-dən gəlir) */
+.content-filter .multiselect-wrapper {
+    width: 220px;
+}
+
+.content-filter .multiselect-trigger {
+    min-height: 40px;
+    height: 40px;
+    padding: 0 12px;
+    background-color: var(--primaryclr);
+    font-size: 14px;
+    font-weight: 500;
+}
+
+.content-filter .multiselect-trigger:hover {
+    background-color: var(--bcgclr);
+}
+
+.content-filter .multiselect-dropdown {
+    background-color: var(--primaryclr);
+}
+
+.content-filter .multiselect-option:hover {
+    background-color: var(--bcgclr);
+}
+
+.content-filter .multiselect-option.is-selected {
+    background-color: var(--inputfocusclr);
+}
+
+/* Filtrləri təmizlə düyməsi */
+.btn-clear-filter {
+    min-height: 40px;
+    background-color: var(--bcgclr);
+    color: var(--plclr);
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    gap: 8px;
+    padding: 0 12px;
+    border: 1px solid var(--borderclr);
+    border-radius: 5px;
+    font-size: 14px;
+    font-weight: 500;
+    transition: 300ms ease;
+}
+
+.btn-clear-filter:hover {
+    background-color: var(--primaryclr);
+    color: var(--txtclr);
+    transform: translateY(-1px);
+}
+/* bu classlar MultiSelect.js-dən gəlir */
+/* CONTENT-FILTER END */
+/* CONTENT-HEADER END */
+
+/* TRANSACTION-FORM START */
+/* FORM-SECTION START */
+/* FORM-ROW START */
+/* bu classlar MultiSelect.js-dən gəlir */
+/* MULTISELECT START */
+.multiselect-wrapper {
+    position: relative;
+    width: 100%;
+}
+
+/* Orijinal select saxlanılır, amma vizual olaraq gizlədilir. */
+.multiselect-source {
+    position: absolute !important;
+    width: 1px !important;
+    height: 1px !important;
+    padding: 0 !important;
+    margin: 0 !important;
+    opacity: 0 !important;
+    overflow: hidden !important;
+    pointer-events: none !important;
+}
+
+/* Dropdown-u açan əsas düymə */
+.multiselect-trigger {
+    width: 100%;
+    min-height: 45px;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    gap: 12px;
+    padding: 10px 12px;
+    background-color: var(--bcgclr);
+    color: var(--txtclr);
+    border: 1px solid var(--borderclr);
+    border-radius: 5px;
+    font-family: inherit;
+    font-size: 14px;
+    text-align: left;
+    cursor: pointer;
+    transition: 300ms ease;
+}
+
+.multiselect-trigger:hover,
+.multiselect-wrapper.is-open .multiselect-trigger {
+    border-color: var(--borderhoverclr);
+}
+
+.multiselect-trigger:focus-visible {
+    outline: 2px solid var(--borderhoverclr);
+    outline-offset: 2px;
+}
+
+.multiselect-value {
+    flex: 1;
+    min-width: 0;
+    overflow: hidden;
+    text-overflow: ellipsis;
+    white-space: nowrap;
+}
+
+.multiselect-placeholder {
+    color: var(--popiconclr);
+}
+
+.multiselect-arrow {
+    flex-shrink: 0;
+    transition: transform 200ms ease;
+}
+
+.multiselect-wrapper.is-open
+.multiselect-arrow {
+    transform: rotate(180deg);
+}
+
+/* Açılan dropdown paneli */
+.multiselect-dropdown {
+    position: absolute;
+    top: calc(100% + 5px);
+    left: 0;
+    right: 0;
+    z-index: 1000;
+    display: none;
+    padding: 8px;
+    background-color: var(--bcgclr);
+    border: 1px solid var(--borderclr);
+    border-radius: 6px;
+    box-shadow: 0 8px 20px rgba(0, 0, 0, 0.15);
+}
+
+.multiselect-wrapper.is-open
+.multiselect-dropdown {
+    display: block;
+}
+
+/* Option siyahısı */
+.multiselect-options {
+    max-height: 220px;
+    overflow-y: auto;
+}
+
+.multiselect-option {
+    width: 100%;
+    display: flex;
+    align-items: center;
+    gap: 10px;
+    padding: 10px;
+    background-color: transparent;
+    color: var(--txtclr);
+    border: none;
+    border-radius: 4px;
+    font-family: inherit;
+    font-size: 13px;
+    text-align: left;
+    cursor: pointer;
+    transition: background-color 150ms ease;
+}
+
+.multiselect-option:hover {
+    background-color: var(--hoverclr);
+}
+
+.multiselect-option.is-selected {
+    background-color: var(--inputfocusclr);
+}
+
+.multiselect-check {
+    width: 16px;
+    height: 16px;
+    flex-shrink: 0;
+    display: inline-flex;
+    justify-content: center;
+    align-items: center;
+    border: 1px solid var(--borderclr);
+    border-radius: 3px;
+    font-size: 11px;
+}
+
+.multiselect-option.is-selected
+.multiselect-check {
+    background-color: var(--primaryclr);
+    border-color: var(--primaryclr);
+    color: var(--txtclr);
+}
+
+.multiselect-empty {
+    padding: 12px 8px;
+    color: var(--popiconclr);
+    font-size: 12px;
+    text-align: center;
+}
+
+/* Dropdown daxilindəki axtarış sahəsi */
+.multiselect-search {
+    display: flex;
+    align-items: center;
+    gap: 8px;
+    margin-bottom: 8px;
+    padding: 0 10px;
+    background-color: var(--hoverclr);
+    border: 1px solid var(--borderclr);
+    border-radius: 5px;
+    color: var(--popiconclr);
+    font-size: 12px;
+    transition: 300ms ease;
+}
+
+.multiselect-search:focus-within {
+    background-color: var(--inputfocusclr);
+    border-color: var(--borderhoverclr);
+}
+
+.multiselect-search-input {
+    width: 100%;
+    height: 36px;
+    background-color: transparent;
+    color: var(--txtclr);
+    border: none;
+    outline: none;
+    font-size: 13px;
+}
+
+.multiselect-search-input::placeholder {
+    color: var(--popiconclr);
+}
+/* MULTISELECT END */
+/* bu classlar MultiSelect.js-dən gəlir */
+/* FORM-ROW END */
+/* FORM-SECTION END */
+/* TRANSACTION-FORM END */
+/* CONTENT-CONTAINER END */

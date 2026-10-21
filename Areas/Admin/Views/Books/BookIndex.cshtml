@@ -1,0 +1,362 @@
+﻿@* ~/Areas/Admin/Views/Books/BookIndex.cshtml: *@
+
+@model IEnumerable<LibraryManagementSystem.Models.ViewModels.BookVM>
+
+@{
+    Layout = "_AdminLayout";
+    ViewData["Title"] = "Kitablar";
+    var selectedAuthorIds = ViewBag.SelectedAuthorIds as List<int> ?? new List<int>();
+    var selectedCategoryIds = ViewBag.SelectedCategoryIds as List<int> ?? new List<int>();
+    var filterAuthors = ViewBag.FilterAuthors as List<LibraryManagementSystem.Data.Entities.TblAuthor>;
+    var filterCategories = ViewBag.FilterCategories as List<LibraryManagementSystem.Data.Entities.TblCategory>;
+    bool hasFilter = selectedAuthorIds.Any() || selectedCategoryIds.Any();
+    string sortOrder = ViewBag.SortOrder;
+    int currentPage = ViewBag.CurrentPage;
+    int totalPages = ViewBag.TotalPages;
+}
+
+@section Styles {
+    <link rel="stylesheet" href="~/AdminControllerCSSs/Content.css" asp-append-version="true" />
+    <link rel="stylesheet" href="~/AdminControllerCSSs/Filter.css" asp-append-version="true" />
+    <link rel="stylesheet" href="~/AdminControllerCSSs/Transactions.css" asp-append-version="true" />
+    <link rel="stylesheet" href="~/AdminControllerCSSs/Modal.css" asp-append-version="true" />
+}
+
+<!-- CONTENT-CONTAINER START -->
+<div class="content-container">
+    <!-- CONTENT-HEADER START -->
+    <div class="content-header">
+        <h1 class="content-title">Kitablar</h1>
+
+        <!-- CONTENT-FILTER START -->
+        <div class="content-filter">
+            <form asp-area="Admin" asp-controller="Books" asp-action="BookIndex" method="get">
+                <select id="sortOrder" name="sortOrder" class="content-filter-select" onchange="this.form.submit()">
+                    <option value="date_desc" selected="@(sortOrder == "date_desc")">Yenidən köhnəyə</option>
+                    <option value="date_asc" selected="@(sortOrder == "date_asc")">Köhnədən yeniyə</option>
+                    <option value="name_asc" selected="@(sortOrder == "name_asc")">A-dan Z-yə</option>
+                    <option value="name_desc" selected="@(sortOrder == "name_desc")">Z-dən A-ya</option>
+                </select>
+
+                <select name="authorIds" class="multiselect" multiple data-autosubmit data-searchable data-placeholder="Müəllif seçin...">
+                    @if (filterAuthors != null)
+                    {
+                        foreach (var author in filterAuthors)
+                        {
+                            <option value="@author.AuthorId" selected="@selectedAuthorIds.Contains(author.AuthorId)">@author.AuthorName @author.AuthorSurname</option>
+                        }
+                    }
+                </select>
+
+                <select name="categoryIds" class="multiselect" multiple data-autosubmit data-searchable data-placeholder="Kateqoriya seçin...">
+                    @if (filterCategories != null)
+                    {
+                        foreach (var category in filterCategories)
+                        {
+                            <option value="@category.CategoryId" selected="@selectedCategoryIds.Contains(category.CategoryId)">@category.CategoryName</option>
+                        }
+                    }
+                </select>
+
+                @if (hasFilter)
+                {
+                    <a asp-area="Admin" asp-controller="Books" asp-action="BookIndex" asp-route-sortOrder="@sortOrder" class="btn-clear-filter" title="Filtrləri təmizlə">
+                        <i class="fa-solid fa-xmark"></i>
+                        <span>Təmizlə</span>
+                    </a>
+                }
+            </form>
+        </div>
+        <!-- CONTENT-FILTER END -->
+
+        <!-- BTN-CREATE START -->
+        <a class="btn-create" asp-area="Admin" asp-controller="Books" asp-action="BookCreate">
+            <i class="fa-solid fa-plus"></i>
+            <span>Yeni Kitab</span>
+        </a>
+        <!-- BTN-CREATE END -->
+    </div>
+    <!-- CONTENT-HEADER END -->
+
+    <!-- Uğur və xəta mesajları (Success, DeleteError, Error): -->
+    <partial name="_Messages" />
+
+    <!-- CONTENT-LIST START -->
+    <div class="content-list">
+        @if (Model != null && Model.Any())
+        {
+            foreach (var book in Model)
+            {
+                var image = book.TblBookImages?.OrderBy(i => i.ImageSortOrder).FirstOrDefault();
+                string? imagePath = null;
+                if (image != null && !string.IsNullOrWhiteSpace(image.ImagePath))
+                {
+                    imagePath = Url.Content("~/Uploads/" + image.ImagePath);
+                }
+                <!-- CONTENT-CARD START -->
+                <div class="content-card">
+                    <!-- CONTENT-INFO START -->
+                    <div class="content-info">
+                        <!-- CONTENT-IMAGE START -->
+                        <div class="content-image" style="width: 65px; min-width: 65px; height: 85px;">
+                            @if (!string.IsNullOrWhiteSpace(imagePath))
+                            {
+                                <img src="@imagePath" alt="@book.BookName" />
+                            }
+                            else
+                            {
+                                <i class="fa-solid fa-book"></i>
+                            }
+                        </div>
+                        <!-- CONTENT-IMAGE END -->
+
+                        <!-- CONTENT-NAME-AREA START -->
+                        <div class="content-name-area">
+                            <span class="content-label">Kİtab</span>
+
+                            <h2 class="content-name">@book.BookName</h2>
+
+                            <span class="content-isbn">ISBN: @book.BookIsbn</span>
+                        </div>
+                        <!-- CONTENT-NAME-AREA END -->
+                    </div>
+                    <!-- CONTENT-INFO END -->
+
+                    <!-- CONTENT-ACTIONS START -->
+                    <div class="content-actions">
+                        <!-- BTN-DETAILS (popup-ı açan button) START -->
+                        <button type="button" class="btn-details" title="Ətraflı məlumat"
+                                data-book-id="@book.BookId"
+                                data-book-name="@book.BookName"
+                                data-book-isbn="@book.BookIsbn"
+                                data-book-about="@book.BookAbout"
+                                data-book-stock-quantity="@book.BookStockQuantity"
+                                data-book-fine-amount="@book.BookFineAmount.ToString("0.00")"
+                                data-book-is-active="@book.BookIsActive"
+                                data-book-created-date="@book.BookCreatedDate.ToString("dd.MM.yyyy HH:mm")"
+                                data-book-updated-date="@(book.BookUpdatedDate.HasValue ? book.BookUpdatedDate.Value.ToString("dd.MM.yyyy HH:mm") : "-")"
+                                data-book-authors="@(book.Authors != null && book.Authors.Any() ? string.Join(", ", book.Authors.Select(a => a.AuthorName + " " + a.AuthorSurname)) : "-")"
+                                data-book-categories="@(book.Categories != null && book.Categories.Any() ? string.Join(", ", book.Categories.Select(c => c.CategoryName)) : "-")"
+                                data-book-image="@imagePath">
+
+                            <i class="fa-solid fa-eye"></i>
+
+                        </button>
+                        <!-- BTN-DETAILS (popup-ı açan button) END -->
+
+                        <!-- BTN-EDIT START -->
+                        <a asp-area="Admin" asp-controller="Books" asp-action="BookEdit" asp-route-id="@book.BookId" class="btn-edit" title="Redaktə et">
+                            <i class="fa-solid fa-pen"></i>
+                            <span>Redaktə Et</span>
+                        </a>
+                        <!-- BTN-EDIT END -->
+
+                        <!-- BTN-DELETE START -->
+                        <a asp-area="Admin" asp-controller="Books" asp-action="BookDelete" asp-route-id="@book.BookId" class="btn-delete" title="Sil">
+                            <i class="fa-solid fa-trash"></i>
+                            <span>Sil</span>
+                        </a>
+                        <!-- BTN-DELETE END -->
+                    </div>
+                    <!-- CONTENT-ACTIONS END -->
+                </div>
+                <!-- CONTENT-CARD END -->
+            }
+        }
+        else
+        {
+            <div class="empty-message">
+                <i class="fa-solid fa-folder-open"></i>
+                <span>Heç bir kitab tapılmadı!</span>
+            </div>
+        }
+    </div>
+    <!-- CONTENT-LIST END -->
+
+    <!-- PAGINATION START -->
+    <partial name="_Pagination" model="@(new PaginationVM
+    {
+        CurrentPage = currentPage,
+        TotalPages = totalPages,
+        PageUrl = p => Url.Action("BookIndex", "Books", new { area = "Admin", page = p, sortOrder })!
+    })" />
+    <!-- PAGINATION END -->
+</div>
+<!-- CONTENT-CONTAINER END -->
+
+<!-- CONTENT-MODAL START -->
+<div class="content-modal" id="bookModal">
+    <div class="modal-container" id="modalContainer"></div>
+
+    <!-- CONTENT-POPUP START -->
+    <div class="content-popup">
+        <!-- POPUP-HEADER START -->
+        <div class="popup-header">
+            <div class="popup-title-area">
+                <div class="popup-icon">
+                    <i class="fa-solid fa-book"></i>
+                </div>
+
+                <div>
+                    <span class="popup-label">Kİtab məlumatları</span>
+                    <h2 id="popupBookTitle">Kitab</h2>
+                </div>
+            </div>
+
+            <button type="button" class="popup-close" id="popupClose" title="Bağla">
+                <i class="fa-solid fa-xmark"></i>
+            </button>
+        </div>
+        <!-- POPUP-HEADER END -->
+
+        <!-- POPUP-BODY START -->
+        <div class="popup-body">
+            <!-- POPUP-IMAGE-AREA START -->
+            <div class="popup-image-area">
+                <div class="popup-image-icon" id="popupImageIcon">
+                    <i class="fa-solid fa-book"></i>
+                </div>
+
+                <img id="popupBookImage" class="popup-content-image" src="" alt="Kitab şəkli" />
+            </div>
+            <!-- POPUP-IMAGE-AREA END -->
+
+            <!-- POPUP-DETAILS START -->
+            <div class="popup-details">
+                <div class="detail-item">
+                    <span class="detail-label">
+                        <i class="fa-solid fa-hashtag"></i>
+                        Kitab ID
+                    </span>
+
+                    <span class="detail-value" id="popupBookId">
+                        -
+                    </span>
+                </div>
+
+                <div class="detail-item">
+                    <span class="detail-label">
+                        <i class="fa-solid fa-book"></i>
+                        Kitab adı
+                    </span>
+
+                    <span class="detail-value" id="popupBookName">
+                        -
+                    </span>
+                </div>
+
+                <div class="detail-item">
+                    <span class="detail-label">
+                        <i class="fa-solid fa-barcode"></i>
+                        ISBN
+                    </span>
+
+                    <span class="detail-value" id="popupBookIsbn">
+                        -
+                    </span>
+                </div>
+
+                <div class="detail-item">
+                    <span class="detail-label">
+                        <i class="fa-solid fa-user-pen"></i>
+                        Müəlliflər
+                    </span>
+
+                    <span class="detail-value"
+                          id="popupBookAuthors">
+                        -
+                    </span>
+                </div>
+
+                <div class="detail-item">
+                    <span class="detail-label">
+                        <i class="fa-solid fa-layer-group"></i>
+                        Kateqoriyalar
+                    </span>
+
+                    <span class="detail-value" id="popupBookCategories">
+                        -
+                    </span>
+                </div>
+
+                <div class="detail-item">
+                    <span class="detail-label">
+                        <i class="fa-solid fa-align-left"></i>
+                        Kitab haqqında
+                    </span>
+
+                    <span class="detail-value" id="popupBookAbout">
+                        -
+                    </span>
+                </div>
+
+                <div class="detail-item">
+                    <span class="detail-label">
+                        <i class="fa-solid fa-box"></i>
+                        Stok miqdarı
+                    </span>
+
+                    <span class="detail-value" id="popupBookStockQuantity">
+                        -
+                    </span>
+                </div>
+
+                <div class="detail-item">
+                    <span class="detail-label">
+                        <i class="fa-solid fa-money-bill"></i>
+                        Cərimə məbləği
+                    </span>
+
+                    <span class="detail-value" id="popupBookFineAmount">
+                        -
+                    </span>
+                </div>
+
+                <div class="detail-item">
+                    <span class="detail-label">
+                        <i class="fa-solid fa-circle-check"></i>
+                        Status
+                    </span>
+
+                    <span class="detail-value">
+                        <span id="popupBookIsActive" class="popup-is-active">
+                            -
+                        </span>
+                    </span>
+                </div>
+
+                <div class="detail-item">
+                    <span class="detail-label">
+                        <i class="fa-solid fa-calendar-plus"></i>
+                        Yaradılma tarixi
+                    </span>
+
+                    <span class="detail-value" id="popupBookCreatedDate">
+                        -
+                    </span>
+                </div>
+
+                <div class="detail-item">
+                    <span class="detail-label">
+                        <i class="fa-solid fa-calendar-check"></i>
+                        Son yenilənmə tarixi
+                    </span>
+
+                    <span class="detail-value" id="popupBookUpdatedDate">
+                        -
+                    </span>
+                </div>
+            </div>
+            <!-- POPUP-DETAILS END -->
+        </div>
+        <!-- POPUP-BODY END -->
+    </div>
+    <!-- CONTENT-POPUP END -->
+</div>
+<!-- CONTENT-MODAL END -->
+
+@section Scripts
+{    
+    <script src="~/AdminControllerJSs/BookIndex.js"></script>
+    <script src="~/AdminControllerJSs/MultiSelect.js"></script>
+}

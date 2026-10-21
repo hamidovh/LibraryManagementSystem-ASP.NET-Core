@@ -1,0 +1,110 @@
+﻿@* ~/Views/Shared/_Layout.cshtml: *@
+
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+
+    <link rel="shortcut icon" href="~/Index/img/lmsfavicon.png" type="image/png" />
+    <link rel="stylesheet" href="~/Index/style.css" asp-append-version="true" />
+    <link rel="stylesheet" href="~/Index/Footer.css" asp-append-version="true" />
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/7.3.1/css/all.css" integrity="sha512-x9WwyMYBnlXMNQ6kQ/Lyzu1NqIhLQKL5Oq6xByfXuRj7s9CskyCbLv/1IjqzJmXwFXWr0ov6jBV7Qbc0hh9nHg==" crossorigin="anonymous" referrerpolicy="no-referrer" />
+    @await RenderSectionAsync("Styles", required: false)
+
+    <title>@ViewData["Title"] - Kitabxana İdarəetmə Sistemi</title>
+</head>
+<body>
+    <header class="header">
+        <a asp-controller="Home" asp-action="HomeIndex" title="Kitabxana" class="logo">Kitabxana İdarəetmə Sistemi</a>
+
+        <section class="box">
+            <div class="search-area">
+                <div class="input-group">
+                    <img src="~/Index/img/book-icon.png" alt="Book Icon" />
+                    <input type="text" placeholder="Axtar..." class="searchInput" />
+                </div>
+
+                <div class="input-controls">
+                    <div class="search search-btn">
+                        <img src="~/Index/img/search_icon.png" alt="Search Icon" />
+                    </div>
+                </div>
+            </div>
+
+            <a href="#" class="login-link">
+                <span>Hesab</span>
+                <img src="~/Index/img/person-circle-icon.webp" alt="Person Circle Icon" />
+            </a>
+        </section>
+    </header>
+
+    <nav class="nav-menu">
+        <ul class="menu">
+            <li class="menu-item">
+                <a href="#" title="Haqqımızda" class="menu-item-link">Haqqımızda</a>
+                <div class="dropdown-container">
+                    <ul class="dropdown">
+                        <li>
+                            <a href="#" title="Missiya">Missiya</a>
+                        </li>
+                        <li>
+                            <a href="#" title="Kataloq">Kataloq</a>
+                        </li>
+                        <li>
+                            <a href="#" title="Ünvan">Ünvan</a>
+                        </li>
+                        <li>
+                            <a href="#" title="Əlaqə">Əlaqə</a>
+                        </li>
+                    </ul>
+                </div>
+            </li>
+
+            <li class="menu-item">
+                <a href="#" title="Xəbərlər" class="menu-item-link">Xəbərlər</a>
+            </li>
+
+            <li class="menu-item">
+                <a href="#" title="Tədbirlər" class="menu-item-link">Tədbirlər</a>
+            </li>
+
+            <li class="menu-item">
+                <a href="#" title="Müəlliflər" class="menu-item-link">Müəlliflər</a>
+            </li>
+
+            <li class="menu-item">
+                <a href="#" title="Kateqoriyalar" class="menu-item-link">Kateqoriyalar</a>
+            </li>
+
+            <li class="menu-item">
+                <a href="#" title="Bloq" class="menu-item-link">Bloq</a>
+            </li>
+
+            <li class="menu-item">
+                <a href="#" title="Xarici Dillərdə" class="menu-item-link">Xarici Dillərdə</a>
+                <div class="dropdown-container">
+                    <ul class="dropdown">
+                        <li>
+                            <a href="#" title="İngilis dilində">İngilis dilində</a>
+                        </li>
+                        <li>
+                            <a href="#" title="Rus dilində">Rus dilində</a>
+                        </li>
+                        <li>
+                            <a href="#" title="Türk dilində">Türk dilində</a>
+                        </li>
+                    </ul>
+                </div>
+            </li>
+        </ul>
+    </nav>
+
+    @RenderBody() @* Bu kod sətiri bu Layout-dan istifadə edən View-ların əsas HTML məzmununu bu hissəyə yerləşdirir. *@
+
+    <partial name="_Footer" />
+
+    <script src="~/lib/jquery/dist/jquery.min.js"></script>
+    @await RenderSectionAsync("Scripts", required: false) @* Bu kod sətiri bu Layout-dan istifadə edən View-larda yazılmış @section Scripts { } daxilindəki script kodlarını burada render edir (göstərir). required: false @section Scripts { } sahəsinin View-da olmasının məcburi olmadığını bildirir. *@
+</body>
+</html>

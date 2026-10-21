@@ -1,0 +1,189 @@
+﻿@* ~/Areas/Admin/Views/Users/UserCreate.cshtml: *@
+
+@model LibraryManagementSystem.Models.ViewModels.UserVM
+
+@{
+    Layout = "_AdminLayout";
+    ViewData["Title"] = "Yeni İstifadəçi";
+    var roles = ViewBag.Roles as List<LibraryManagementSystem.Data.Entities.TblRole>;
+    string today = DateTime.Today.ToString("yyyy-MM-dd");
+}
+
+@section Styles {
+    <link rel="stylesheet" href="~/AdminControllerCSSs/Content.css" asp-append-version="true" />
+    <link rel="stylesheet" href="~/AdminControllerCSSs/Transactions.css" asp-append-version="true" />
+}
+
+<!-- CONTENT-CONTAINER START -->
+<div class="content-container">
+    <!-- CONTENT-HEADER START -->
+    <div class="content-header">
+        <div class="content-title-area">
+            <div class="content-icon">
+                <i class="fa-solid fa-user"></i>
+            </div>
+
+            <div>
+                <span class="content-label">İstİfadəçİlər</span>
+                <h1 class="content-title">Yeni İstifadəçi</h1>
+            </div>
+        </div>
+
+        <!-- BTN-BACK START -->
+        <a asp-area="Admin" asp-controller="Users" asp-action="UserIndex" class="btn-back">
+            <i class="fa-solid fa-arrow-left"></i>
+            <span>Geri</span>
+        </a>
+        <!-- BTN-BACK END -->
+    </div>
+    <!-- CONTENT-HEADER END -->
+
+    <!-- TRANSACTION-FORM START -->
+    <form asp-area="Admin" asp-controller="Users" asp-action="UserCreate" method="post" class="transaction-form">
+        <!-- Controller-dən gələn xəta mesajı: -->
+        <div asp-validation-summary="ModelOnly" class="validation-message warning-message"></div>
+
+        <!-- FORM-SECTION START -->
+        <div class="form-section">
+            <div class="section-title">
+                <i class="fa-solid fa-user"></i>
+                <span>İstifadəçi məlumatları</span>
+            </div>
+
+            <div class="form-row">
+                <div class="form-group">
+                    <label asp-for="UserName" class="form-label">Ad:</label>
+                    <input asp-for="UserName" class="form-input" placeholder="İstifadəçinin adını daxil edin..." />
+                    <span asp-validation-for="UserName" class="validation-message"></span>
+                </div>
+
+                <div class="form-group">
+                    <label asp-for="UserSurname" class="form-label">Soyad:</label>
+                    <input asp-for="UserSurname" class="form-input" placeholder="İstifadəçinin soyadını daxil edin..." />
+                    <span asp-validation-for="UserSurname" class="validation-message"></span>
+                </div>
+            </div>
+
+            <div class="form-row">
+                <div class="form-group">
+                    <label asp-for="UserDateOfBirth" class="form-label">Doğum tarixi:</label>
+                    <input asp-for="UserDateOfBirth" type="date" max="@today" value="@(Model.UserDateOfBirth == default ? "" : Model.UserDateOfBirth.ToString("yyyy-MM-dd"))" class="form-input" style="color-scheme: dark;" /> @* style="color-scheme: dark;" *@
+                    <span asp-validation-for="UserDateOfBirth" class="validation-message"></span>
+                </div>
+
+                <div class="form-group">
+                    <label asp-for="UserSex" class="form-label">Cins:</label>
+                    <select asp-for="UserSex" class="form-select" style="height: 45px; padding: 0 12px;">
+                        <option value="">Seçilməyib</option>
+                        <option value="Kişi">Kişi</option>
+                        <option value="Qadın">Qadın</option>
+                    </select>
+                    <span asp-validation-for="UserSex" class="validation-message"></span>
+                </div>
+            </div>
+
+            <div class="form-group">
+                <label asp-for="UserPersonalNo" class="form-label">FİN kod:</label>
+                <input asp-for="UserPersonalNo" class="form-input" maxlength="7" placeholder="FİN kodu daxil edin..." />
+                <span class="input-info">7 simvol (latın hərfləri və rəqəmlər)</span>
+                <span asp-validation-for="UserPersonalNo" class="validation-message"></span>
+            </div>
+
+            <div class="form-row">
+                <div class="form-group">
+                    <label asp-for="UserEmail" class="form-label">E-poçt:</label>
+                    <input asp-for="UserEmail" type="email" class="form-input" placeholder="E-poçt ünvanını daxil edin..." />
+                    <span asp-validation-for="UserEmail" class="validation-message"></span>
+                </div>
+
+                <div class="form-group">
+                    <label asp-for="UserPhoneNo" class="form-label">Telefon nömrəsi:</label>
+                    <input asp-for="UserPhoneNo" type="tel" class="form-input" placeholder="+994501234567" />
+                    <span asp-validation-for="UserPhoneNo" class="validation-message"></span>
+                </div>
+            </div>
+
+            <div class="form-group">
+                <label asp-for="UserAddress" class="form-label">Ünvan:</label>
+                <input asp-for="UserAddress" class="form-input" placeholder="Ünvanı daxil edin..." />
+                <span asp-validation-for="UserAddress" class="validation-message"></span>
+            </div>
+        </div>
+        <!-- FORM-SECTION END -->
+
+        <!-- ACCOUNT FORM-SECTION START -->
+        <div class="form-section" style="margin-top: 20px;">
+            <div class="section-title">
+                <i class="fa-solid fa-lock"></i>
+                <span>Hesab məlumatları</span>
+            </div>
+
+            <div class="form-group">
+                <label asp-for="UserUsername" class="form-label">İstifadəçi adı (username):</label>
+                <input asp-for="UserUsername" class="form-input" autocomplete="off" placeholder="İstifadəçi adını daxil edin..." />
+                <span asp-validation-for="UserUsername" class="validation-message"></span>
+            </div>
+
+            <div class="form-row">
+                <div class="form-group">
+                    <label asp-for="UserPassword" class="form-label">Parol:</label>
+                    <input asp-for="UserPassword" class="form-input" autocomplete="new-password" placeholder="Parolu daxil edin..." />
+                    <span class="input-info">Minimum 8 simvol</span>
+                    <span asp-validation-for="UserPassword" class="validation-message"></span>
+                </div>
+
+                <div class="form-group">
+                    <label asp-for="ConfirmPassword" class="form-label">Parolun təkrarı:</label>
+                    <input asp-for="ConfirmPassword" class="form-input" autocomplete="new-password" placeholder="Parolu təkrar daxil edin..." />
+                    <span asp-validation-for="ConfirmPassword" class="validation-message"></span>
+                </div>
+            </div>
+
+            <div class="form-group">
+                <label asp-for="RoleId" class="form-label">Rol:</label>
+                <select asp-for="RoleId" class="form-select" style="height: 45px; padding: 0 12px;">
+                    <option value="0">Rol seçin...</option>
+                    @if (roles != null)
+                    {
+                        foreach (var role in roles)
+                        {
+                            <option value="@role.RoleId">@role.RoleName</option>
+                        }
+                    }
+                </select>
+                <span asp-validation-for="RoleId" class="validation-message"></span>
+            </div>
+
+            <div class="form-group form-group-inline">
+                <label asp-for="UserIsActive" class="form-label">Status:</label>
+                <label class="status-checkbox">
+                    <input asp-for="UserIsActive" />
+                    <span>Aktiv</span>
+                </label>
+                <span asp-validation-for="UserIsActive" class="validation-message"></span>
+            </div>
+        </div>
+        <!-- ACCOUNT FORM-SECTION END -->
+
+        <!-- FORM-ACTIONS START -->
+        <div class="form-actions">
+            <a asp-area="Admin" asp-controller="Users" asp-action="UserIndex" class="btn-cancel">
+                <i class="fa-solid fa-xmark"></i>
+                <span>Ləğv et</span>
+            </a>
+
+            <button type="submit" class="btn-save">
+                <i class="fa-solid fa-check"></i>
+                <span>Yadda saxla</span>
+            </button>
+        </div>
+        <!-- FORM-ACTIONS END -->
+    </form>
+    <!-- TRANSACTION-FORM END -->
+</div>
+<!-- CONTENT-CONTAINER END -->
+
+@section Scripts
+{
+    <partial name="_ValidationScriptsPartial" />
+}

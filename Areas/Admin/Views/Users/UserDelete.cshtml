@@ -1,0 +1,249 @@
+﻿@* ~/Areas/Admin/Views/Users/UserDelete.cshtml: *@
+
+@model LibraryManagementSystem.Models.ViewModels.UserVM
+
+@{
+    Layout = "_AdminLayout";
+    ViewData["Title"] = "İstifadəçini Sil";
+}
+
+@section Styles {
+    <link rel="stylesheet" href="~/AdminControllerCSSs/Content.css" asp-append-version="true" />
+    <link rel="stylesheet" href="~/AdminControllerCSSs/Transactions.css" asp-append-version="true" />
+    <link rel="stylesheet" href="~/AdminControllerCSSs/Modal.css" asp-append-version="true" />
+    <link rel="stylesheet" href="~/AdminControllerCSSs/Delete.css" asp-append-version="true" />
+}
+
+<!-- CONTENT-CONTAINER START -->
+<div class="content-container">
+    <!-- CONTENT-HEADER START -->
+    <div class="content-header">
+        <div class="content-title-area">
+            <div class="content-icon">
+                <i class="fa-solid fa-user"></i>
+            </div>
+
+            <div>
+                <span class="content-label">İstİfadəçİlər</span>
+                <h1 class="content-title">İstifadəçini Sil</h1>
+            </div>
+        </div>
+
+        <!-- BTN-BACK START -->
+        <a asp-area="Admin" asp-controller="Users" asp-action="UserIndex" class="btn-back">
+            <i class="fa-solid fa-arrow-left"></i>
+            <span>Geri</span>
+        </a>
+        <!-- BTN-BACK END -->
+    </div>
+    <!-- CONTENT-HEADER END -->
+
+    <!-- TRANSACTION-FORM START -->
+    <form asp-area="Admin" asp-controller="Users" asp-action="UserDelete" asp-route-id="@Model.UserId" method="post" class="transaction-form">
+        <!-- FORM-SECTION START -->
+        <div class="form-section">
+            <!-- DELETE-WARNING START -->
+            <div class="delete-warning">
+                <div class="warning-icon">
+                    <i class="fa-solid fa-triangle-exclamation"></i>
+                </div>
+
+                <div class="warning-content">
+                    <h2>İstifadəçini silmək istədiyinizdən əminsiniz?</h2>
+                    <p>Bu əməliyyat geri qaytarıla bilməz! İstifadəçini silməzdən əvvəl məlumatları yoxlayın.</p>
+                </div>
+            </div>
+            <!-- DELETE-WARNING END -->
+
+            <!-- CONTENT-DATA START (istifadəçilərin şəkli olmadığı üçün tək sütun) -->
+            <div class="content-data" style="grid-template-columns: 1fr;">
+                <!-- CONTENT-DETAILS START -->
+                <div class="content-details">
+                    <div class="detail-item">
+                        <span class="detail-label">
+                            <i class="fa-solid fa-hashtag"></i>
+                            İstifadəçi ID
+                        </span>
+
+                        <span class="detail-value">
+                            @Model.UserId
+                        </span>
+                    </div>
+
+                    <div class="detail-item">
+                        <span class="detail-label">
+                            <i class="fa-solid fa-user"></i>
+                            Ad
+                        </span>
+
+                        <span class="detail-value">
+                            @Model.UserName
+                        </span>
+                    </div>
+
+                    <div class="detail-item">
+                        <span class="detail-label">
+                            <i class="fa-solid fa-user"></i>
+                            Soyad
+                        </span>
+
+                        <span class="detail-value">
+                            @Model.UserSurname
+                        </span>
+                    </div>
+
+                    <div class="detail-item">
+                        <span class="detail-label">
+                            <i class="fa-solid fa-calendar-day"></i>
+                            Doğum tarixi
+                        </span>
+
+                        <span class="detail-value">
+                            @Model.UserDateOfBirth.ToString("dd.MM.yyyy")
+                        </span>
+                    </div>
+
+                    <div class="detail-item">
+                        <span class="detail-label">
+                            <i class="fa-solid fa-venus-mars"></i>
+                            Cins
+                        </span>
+
+                        <span class="detail-value">
+                            @(string.IsNullOrWhiteSpace(Model.UserSex) ? "-" : Model.UserSex)
+                        </span>
+                    </div>
+
+                    <div class="detail-item">
+                        <span class="detail-label">
+                            <i class="fa-solid fa-id-card"></i>
+                            FİN kod
+                        </span>
+
+                        <span class="detail-value">
+                            @Model.UserPersonalNo
+                        </span>
+                    </div>
+
+                    <div class="detail-item">
+                        <span class="detail-label">
+                            <i class="fa-solid fa-envelope"></i>
+                            E-poçt
+                        </span>
+
+                        <span class="detail-value">
+                            @Model.UserEmail
+                        </span>
+                    </div>
+
+                    <div class="detail-item">
+                        <span class="detail-label">
+                            <i class="fa-solid fa-phone"></i>
+                            Telefon nömrəsi
+                        </span>
+
+                        <span class="detail-value">
+                            @Model.UserPhoneNo
+                        </span>
+                    </div>
+
+                    <div class="detail-item">
+                        <span class="detail-label">
+                            <i class="fa-solid fa-location-dot"></i>
+                            Ünvan
+                        </span>
+
+                        <span class="detail-value">
+                            @Model.UserAddress
+                        </span>
+                    </div>
+
+                    <div class="detail-item">
+                        <span class="detail-label">
+                            <i class="fa-solid fa-at"></i>
+                            İstifadəçi adı
+                        </span>
+
+                        <span class="detail-value">
+                            @Model.UserUsername
+                        </span>
+                    </div>
+
+                    <div class="detail-item">
+                        <span class="detail-label">
+                            <i class="fa-solid fa-user-shield"></i>
+                            Rol
+                        </span>
+
+                        <span class="detail-value">
+                            @(string.IsNullOrWhiteSpace(Model.RoleName) ? "-" : Model.RoleName)
+                        </span>
+                    </div>
+
+                    <div class="detail-item">
+                        <span class="detail-label">
+                            <i class="fa-solid fa-circle-check"></i>
+                            Status
+                        </span>
+
+                        <span class="detail-value">
+                            @if (Model.UserIsActive)
+                            {
+                                <span class="status-is-active active">Aktiv</span>
+                            }
+                            else
+                            {
+                                <span class="status-is-active deactive">Deaktiv</span>
+                            }
+                        </span>
+                    </div>
+
+                    <div class="detail-item">
+                        <span class="detail-label">
+                            <i class="fa-solid fa-calendar-plus"></i>
+                            Qeydiyyat tarixi
+                        </span>
+
+                        <span class="detail-value">
+                            @Model.UserRegistrationDate.ToString("dd.MM.yyyy HH:mm")
+                        </span>
+                    </div>
+
+                    <div class="detail-item">
+                        <span class="detail-label">
+                            <i class="fa-solid fa-calendar-check"></i>
+                            Son yenilənmə tarixi
+                        </span>
+
+                        <span class="detail-value">
+                            @(Model.UserUpdatedDate.HasValue ? Model.UserUpdatedDate.Value.ToString("dd.MM.yyyy HH:mm") : "-")
+                        </span>
+                    </div>
+                </div>
+                <!-- CONTENT-DETAILS END -->
+            </div>
+            <!-- CONTENT-DATA END -->
+
+            <!-- DELETE-MESSAGE START -->
+            <div class="delete-message">
+                <i class="fa-solid fa-circle-info"></i>
+                <span>İstifadəçinin hazırda icarədə olan kitabı və ya icarə tarixçəsi mövcuddursa, istifadəçi silinməyəcək!</span>
+            </div>
+            <!-- DELETE-MESSAGE END -->
+        </div>
+        <!-- FORM-SECTION END -->
+
+        <!-- FORM-ACTIONS START -->
+        <div class="form-actions">
+            <a asp-area="Admin" asp-controller="Users" asp-action="UserIndex" class="btn-cancel">Ləğv et</a>
+
+            <button type="submit" class="btn-delete">
+                <i class="fa-solid fa-trash"></i>
+                <span>İstifadəçini sil</span>
+            </button>
+        </div>
+        <!-- FORM-ACTIONS END -->
+    </form>
+    <!-- TRANSACTION-FORM END -->
+</div>
+<!-- CONTENT-CONTAINER END -->
